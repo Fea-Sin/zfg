@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cr-comp snapshot to match 1`] = `
-<div
-  class="cr-app-text hello"
->
-  COMP IS DONE
+exports[`zfg snapshot to match 1`] = `
+<div>
+  123
 </div>
 `;

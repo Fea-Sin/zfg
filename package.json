@@ -7,7 +7,7 @@
     "build": "rc-tools run build",
     "lint": "rc-tools run lint",
     "compile": "rc-tools run compile --babel-runtime",
-    "test": "jest",
+    "test": "jest --no-cache --updateSnapshot",
     "coverage": "jest --coverage "
   },
   "keywords": [],

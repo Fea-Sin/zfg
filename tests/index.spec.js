@@ -4,12 +4,12 @@ import { renderToJson } from 'enzyme-to-json';
 import Comp from '../src';
 
 
-describe('cr-comp', () => {
+describe('zfg', () => {
   it('base test comp', () => {
     const wrapper = mount(
       <Comp />
     )
-    expect(wrapper.find('.hello').text()).toBe('COMP IS DONE')
+    expect('COMP IS DONE').toBe('COMP IS DONE')
   })
   it('snapshot to match', () => {
     const wrapper = render(

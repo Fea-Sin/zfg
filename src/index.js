@@ -23,7 +23,7 @@ class Comp extends PureComponent {
     const { prefixCls } = this.props
     
     return (
-      <div className={`${prefixCls}-text hello`}>COMP IS DONE</div>
+      <div>123</div>
     )
   }
 }
