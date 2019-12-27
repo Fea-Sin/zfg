@@ -1,9 +1,10 @@
-import React, { PureComponent, Component } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import OuiDom from './utils/ouiDomUtils'
+import React, { PureComponent, Component } from 'react';
+import PropTypes from 'prop-types';
+import zfgPackage from '../package.json';
+import PIE from './PIE';
+import COLUMN from './COLUMN';
 
-class Comp extends PureComponent {
+class ZFG extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -19,19 +20,23 @@ class Comp extends PureComponent {
   }
 
   render () {
-
-    const { prefixCls } = this.props
     
     return (
-      <div>123</div>
+      <div>
+        <div>{`ZFG version ${zfgPackage.version}`}</div>
+      </div>
     )
   }
 }
 
-Comp.propTypes = {
-  prefixCls: PropTypes.string
+ZFG.propTypes = {
 }
-Comp.defaultProps = {
-  prefixCls: 'cr-app'
+ZFG.defaultProps = {
 }
-export default Comp
+
+export {
+  PIE,
+  COLUMN,
+}
+
+export default ZFG
