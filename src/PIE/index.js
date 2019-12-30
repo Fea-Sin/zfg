@@ -1,6 +1,9 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
+import DataSet from '@antv/data-set';
+import insertCss from 'insert-css';
+import { setCoordName } from '../utils/setChar';
 
 class App extends PureComponent {
 
@@ -11,8 +14,69 @@ class App extends PureComponent {
     }
   }
 
-  componentDidMount() {
+  dataInit = () => {
     const { data, config } = this.props
+    const ds = new DataSet()
+
+    /**
+     * set config css
+     */
+    insertCss(config.style)
+
+    // 创建 DataView
+    const dv = ds.createView().source(data)
+
+    // map 数据加工
+    const mapObj = config.dictionaies
+    const objKey = Object.keys(mapObj)
+
+    dv.transform({
+      type: 'map',
+      callback(row) {
+        objKey.forEach((item) => {
+          const itemKey = Object.keys(mapObj[item])
+          const itemValue = Object.values(mapObj[item])
+          for(let i=0; i<itemKey.length; i++) {
+            if ( row[item] == itemKey[i] ) {
+              row[item] = itemValue[i]
+            }
+          }
+        })
+        return row
+      }
+    })
+
+    // console.log('map 数据加工', dv.rows)
+
+
+    // 字段重命名
+    dv.transform({
+      type: 'rename',
+      map: {
+        emotionType: 'item',
+        count: 'count'
+      }
+    })
+
+    // 字段过滤
+    dv.transform({
+      type: 'pick',
+      fields: ['item', 'count'],
+    })
+
+    // 数据比例
+    dv.transform({
+      type: 'percent',
+      field: 'count',
+      dimension: 'item',
+      as: 'percent',
+    })
+
+    return dv
+  }
+
+  componentDidMount() {
+    const { config } = this.props
     const pieConfig = () => {
       return config.forceFit
         ? {
@@ -24,6 +88,11 @@ class App extends PureComponent {
           height: config.height,
         }
     }
+    
+    const dv = this.dataInit()
+    const data = dv.rows
+    // console.log('data set is done', dv.rows)
+    const coordNameArr = Object.keys(data[0])
 
     if (data && data.length > 0) {
 
@@ -40,14 +109,17 @@ class App extends PureComponent {
         chart.source(data, {
           percent: {
             formatter: val => {
-              val = (val * 100) + '%';
+              val = ( (val * 100).toFixed(2) ) + '%';
               return val;
             }
           }
         })
 
+        chart.legend(config.legend)
+
         chart.coord('theta', {
-          radius: 0.75
+          radius: 0.75,
+          innerRadius: 0.6,
         })
 
         chart.tooltip({
@@ -57,23 +129,25 @@ class App extends PureComponent {
 
         chart.intervalStack()
           .position('percent')
-          .color('item')
+          .color('item', config.color || [])
           .label('percent', {
             formatter: (val, item) => {
-              return item.point.item + ': ' + val;
+              return  val;
             }
           })
           .tooltip('item*percent', (item, percent) => {
-            percent = percent * 100 + '%';
+            percent = ( (percent * 100).toFixed(2) ) + '%';
             return {
               name: item,
               value: percent
             }
           })
           .style({
-            lineWidth: 1,
+            lineWidth: 0,
             stroke: '#fff',
           })
+        
+        chart.guide().html(config.guide.html);
   
         chart.render()
 

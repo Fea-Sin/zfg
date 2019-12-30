@@ -13,18 +13,89 @@ reactContainer.style.cssText = `
                                 margin-bottom: 10px;
                                `;
 
-const data = [
-  { item: '事例一', count: 40, percent: 0.4 },
-  { item: '事例二', count: 21, percent: 0.21 },
-  { item: '事例三', count: 17, percent: 0.17 },
-  { item: '事例四', count: 13, percent: 0.13 },
-  { item: '事例五', count: 9, percent: 0.09 }
-];
+const data =  [{
+  "id": null,
+  "hot": null,
+  "emotionType": 1,
+  "category": null,
+  "categoryType": null,
+  "source": null,
+  "title": null,
+  "publishTime": null,
+  "newsTags": null,
+  "count": 5
+}, {
+  "id": null,
+  "hot": null,
+  "emotionType": 2,
+  "category": null,
+  "categoryType": null,
+  "source": null,
+  "title": null,
+  "publishTime": null,
+  "newsTags": null,
+  "count": 17
+}, {
+  "id": null,
+  "hot": null,
+  "emotionType": 3,
+  "category": null,
+  "categoryType": null,
+  "source": null,
+  "title": null,
+  "publishTime": null,
+  "newsTags": null,
+  "count": 41
+}];
+
+const dictionaiesObj = {
+  emotionType: {
+    1: '积极',
+    2: '中立',
+    3: '消极',
+  },
+}
+
+const sum = 80
 
 const config = {
   width: 400,
   height: 400,
   forceFit: true,
+  color: ['#8798ff', '#ffd481', '#ff90a2'],
+  dictionaies: dictionaiesObj,
+  legend: {
+    position: 'right-center',
+    offsetX: -100,
+    clickable: false  
+  },
+  guide: {
+    html: {
+      position: [ '50%', '50%' ],
+      html: `<div class="g2-guide-html"><p class="title">${sum}</p><p class="value">总计</p></div>`
+    }
+  },
+  style: `
+    .g2-guide-html {
+        width: 100px;
+        height: 80px;
+        vertical-align: middle;
+        text-align: center;
+        line-height: 0.2;
+    }
+
+    .g2-guide-html .title {
+        font-size: 32px;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .g2-guide-html .value {
+        font-size: 12px;
+        color: #8c8c8c;
+        font-weight: 300;
+    }    
+  `
 }
 
 function render(container) {
