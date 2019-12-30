@@ -14,10 +14,8 @@ reactContainer.style.cssText = `
                                `;
 
 const data = [
-  { genre: 'Sports', sold: 275 },
-  { genre: 'Strategy', sold: 115 },
-  { genre: 'Action', sold: 120 },
-  { genre: 'Shooter', sold: 350 },
+  { hello: 'Sports', world: 25 },
+  { hello: 'Strategy', world: 115 },
 ]
 
 const config = {

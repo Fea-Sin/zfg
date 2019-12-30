@@ -1,6 +1,7 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
+import { setCoordName } from '../utils/setChar';
 
 class App extends PureComponent {
 
@@ -25,6 +26,8 @@ class App extends PureComponent {
         }
     }
 
+    const coordNameArr = Object.keys(data[0])
+
     if (data && data.length > 0) {
 
       this.setState({
@@ -41,8 +44,8 @@ class App extends PureComponent {
 
         chart
           .interval()
-          .position('genre*sold')
-          .color('genre')
+          .position(setCoordName( coordNameArr ))
+          .color(coordNameArr[0])
   
         chart.render()
 
