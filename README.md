@@ -4,8 +4,8 @@ g2 react packaging version
 
 ## ✨ Example View
 
-<img src='http://39.107.35.212/images/zfg/example1.png' alt='example' width='300px' style='margin-right: 30px; margin-bottom: 30px' />
-<img src='http://39.107.35.212/images/zfg/example2.png' alt='example' width='300px' style='margin-right: 30px; margin-bottom: 30px' />
+<img src='./github/example1.png' alt='example' width='300px' style='margin-right: 30px; margin-bottom: 30px' />
+<img src='./github/example2.png' alt='example' width='300px' style='margin-right: 30px; margin-bottom: 30px' />
 
 ##  📦 Installation
 
