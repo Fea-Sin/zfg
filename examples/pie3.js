@@ -66,47 +66,16 @@ const dataConfig = {
   },
 }
 
-const sum = 80
-
 const config = {
   width: 400,
   height: 400,
   forceFit: true,
   color: ['#8798ff', '#ffd481', '#ff90a2'],
-  legend: false,
   coord: {
     theta: {
       radius: 0.75,
-      innerRadius: 0.6,
     }
   },
-  guide: {
-    html: {
-      position: [ '50%', '50%' ],
-      html: `<div class="g2-guide-html"><p class="title">${sum}</p><p class="value">总计</p></div>`
-    }
-  },
-  style: `
-    .g2-guide-html {
-        width: 100px;
-        height: 80px;
-        vertical-align: middle;
-        text-align: center;
-        line-height: 0.2;
-    }
-
-    .g2-guide-html .title {
-        font-size: 32px;
-        color: #000;
-        font-weight: bold;
-    }
-
-    .g2-guide-html .value {
-        font-size: 12px;
-        color: #8c8c8c;
-        font-weight: 300;
-    }    
-  `
 }
 
 function render(container) {

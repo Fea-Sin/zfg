@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
 import DataSet from '@antv/data-set';
 import insertCss from 'insert-css';
-import { setCoordName } from '../utils/setChar';
 
 class App extends PureComponent {
 
@@ -15,48 +14,50 @@ class App extends PureComponent {
   }
 
   dataInit = () => {
-    const { data, config } = this.props
+    const { data, config, dataConfig } = this.props
     const ds = new DataSet()
 
     /**
      * set config css
      */
-    insertCss(config.style)
+    if (config.style) {
+      insertCss(config.style)
+    }
 
     // 创建 DataView
     const dv = ds.createView().source(data)
 
-    // map 数据加工
-    const mapObj = config.dictionaies
-    const objKey = Object.keys(mapObj)
+    if (dataConfig.dictionaies) {
 
-    dv.transform({
-      type: 'map',
-      callback(row) {
-        objKey.forEach((item) => {
-          const itemKey = Object.keys(mapObj[item])
-          const itemValue = Object.values(mapObj[item])
-          for(let i=0; i<itemKey.length; i++) {
-            if ( row[item] == itemKey[i] ) {
-              row[item] = itemValue[i]
+      // map 数据加工
+      const mapObj = dataConfig.dictionaies
+      const objKey = Object.keys(mapObj)      
+
+      dv.transform({
+        type: 'map',
+        callback(row) {
+          objKey.forEach((item) => {
+            const itemKey = Object.keys(mapObj[item])
+            const itemValue = Object.values(mapObj[item])
+            for(let i=0; i<itemKey.length; i++) {
+              if ( row[item] == itemKey[i] ) {
+                row[item] = itemValue[i]
+              }
             }
-          }
-        })
-        return row
-      }
-    })
+          })
+          return row
+        }
+      })
+      // console.log('map 数据加工', dv.rows)
+    }
 
-    // console.log('map 数据加工', dv.rows)
-
-
-    // 字段重命名
-    dv.transform({
-      type: 'rename',
-      map: {
-        emotionType: 'item',
-        count: 'count'
-      }
-    })
+    if (dataConfig.rename) {
+      // 字段重命名
+      dv.transform({
+        type: 'rename',
+        map: dataConfig.rename
+      })
+    }
 
     // 字段过滤
     dv.transform({
@@ -91,7 +92,7 @@ class App extends PureComponent {
     
     const dv = this.dataInit()
     const data = dv.rows
-    // console.log('data set is done', dv.rows)
+    console.log('data set is done', dv.rows)
     const coordNameArr = Object.keys(data[0])
 
     if (data && data.length > 0) {
@@ -117,10 +118,7 @@ class App extends PureComponent {
 
         chart.legend(config.legend)
 
-        chart.coord('theta', {
-          radius: 0.75,
-          innerRadius: 0.6,
-        })
+        chart.coord('theta', config.coord.theta)
 
         chart.tooltip({
           showTitle: false,
@@ -147,7 +145,10 @@ class App extends PureComponent {
             stroke: '#fff',
           })
         
-        chart.guide().html(config.guide.html);
+        // guide 渲染
+        if (config.guide && config.guide.html) {
+          chart.guide().html(config.guide.html);
+        }
   
         chart.render()
 
@@ -180,6 +181,12 @@ App.defaultProps = {
   config: {
     width: 600,
     height: 300,
+    color: ['#8798ff', '#ffd481', '#ff90a2'],
+    coord: {
+      theta: {
+        radius: 0.75,
+      }
+    },
   }
 }
 

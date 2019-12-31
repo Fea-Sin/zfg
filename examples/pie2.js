@@ -15,65 +15,85 @@ reactContainer.style.cssText = `
 const data =  [{
   "id": null,
   "hot": null,
-  "emotionType": 1,
+  "emotionType": null,
   "category": null,
   "categoryType": null,
-  "source": null,
+  "source": "今日头条",
   "title": null,
   "publishTime": null,
   "newsTags": null,
-  "count": 5
+  "count": 21
 }, {
   "id": null,
   "hot": null,
-  "emotionType": 2,
+  "emotionType": null,
   "category": null,
   "categoryType": null,
-  "source": null,
+  "source": "网易号",
   "title": null,
   "publishTime": null,
   "newsTags": null,
-  "count": 17
+  "count": 11
 }, {
   "id": null,
   "hot": null,
-  "emotionType": 3,
+  "emotionType": null,
   "category": null,
   "categoryType": null,
-  "source": null,
+  "source": "一点资讯",
   "title": null,
   "publishTime": null,
   "newsTags": null,
-  "count": 41
+  "count": 3
+}, {
+  "id": null,
+  "hot": null,
+  "emotionType": null,
+  "category": null,
+  "categoryType": null,
+  "source": "人民日报",
+  "title": null,
+  "publishTime": null,
+  "newsTags": null,
+  "count": 3
+}, {
+  "id": null,
+  "hot": null,
+  "emotionType": null,
+  "category": null,
+  "categoryType": null,
+  "source": "中华网",
+  "title": null,
+  "publishTime": null,
+  "newsTags": null,
+  "count": 2
 }];
 
 const dataConfig = {
   // 1. 数据 map 处理
-  dictionaies: {
-    emotionType: {
-      1: '积极',
-      2: '中立',
-      3: '消极',
-    },
-  },
+
   /**
    * 2. 字段重命名
    * 饼形图、环形图，字段有两个 item*count
    * 如果数据字段不匹配，请配置完成
    */ 
   rename: {
-    emotionType: 'item',
+    source: 'item',
   },
 }
 
-const sum = 80
+const sum = 100
 
 const config = {
   width: 400,
   height: 400,
   forceFit: true,
-  color: ['#8798ff', '#ffd481', '#ff90a2'],
-  legend: false,
+  color: ['#8798ff', '#adb9ff', '#8584ff', '#ffdebc', '#fcb44a'],
+  legend: {
+    position: 'right-center',
+    offsetX: -100,
+    clickable: false  
+  },
   coord: {
     theta: {
       radius: 0.75,
