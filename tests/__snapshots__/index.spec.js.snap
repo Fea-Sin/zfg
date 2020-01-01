@@ -2,6 +2,11 @@
 
 exports[`zfg snapshot to match 1`] = `
 <div>
-  123
+  <div>
+    ZFG version 0.0.1
+  </div>
+  <div>
+    G2 version 3.5.11
+  </div>
 </div>
 `;
