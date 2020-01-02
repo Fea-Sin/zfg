@@ -164,7 +164,7 @@ class App extends PureComponent {
         <div>pie</div>
         {
           this.state.noData
-          ? (<div>暂无数据</div>)
+          ? (<div>暂无数据，此处可以单独抽离成组件</div>)
           : (<div id='c1'></div>)
         }
       </div>

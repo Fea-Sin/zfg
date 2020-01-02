@@ -1,6 +1,6 @@
 {
   "name": "zfg",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "g2 react packaging version",
   "scripts": {
     "start": "rc-tools run server",
@@ -9,6 +9,7 @@
     "compile": "rc-tools run compile --babel-runtime",
     "test": "jest --no-cache --updateSnapshot",
     "pub": "zf-tools run pub",
+    "prepublish": "zf-tools run guard",
     "coverage": "jest --coverage "
   },
   "keywords": [],
@@ -52,7 +53,7 @@
     "jest": "^21.2.1",
     "pre-commit": "1.x",
     "rc-tools": "^7.0.2",
-    "zf-tools": "0.0.2"
+    "zf-tools": "0.0.9"
   },
   "dependencies": {
     "@antv/data-set": "^0.10.2",
