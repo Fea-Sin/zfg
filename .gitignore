@@ -28,3 +28,5 @@ es
 coverage
 yarn.lock
 package-lock.json
+tests/**/*.snap
+tests/__snapshots__/*
