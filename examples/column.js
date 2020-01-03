@@ -14,8 +14,8 @@ reactContainer.style.cssText = `
                                `;
 
 const data = [
-  { hello: 'Sports', world: 25 },
-  { hello: 'Strategy', world: 115 },
+  { hello: '运动', world: 25 },
+  { hello: '休闲', world: 115 },
 ]
 
 const config = {

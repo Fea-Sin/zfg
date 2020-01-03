@@ -1,6 +1,6 @@
 {
   "name": "zfg",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "g2 react packaging version",
   "scripts": {
     "start": "rc-tools run server",
@@ -8,7 +8,7 @@
     "lint": "rc-tools run lint",
     "compile": "rc-tools run compile --babel-runtime",
     "test": "jest --no-cache --updateSnapshot",
-    "pub": "zf-tools run pub",
+    "pub": "npm run test && npm run build && npm run compile && zf-tools run pub",
     "prepublish": "zf-tools run guard",
     "coverage": "jest --coverage "
   },
