@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Testone, { PIE } from '..';
+import Testone, { PIE } from 'zfg';
 import '../assets/index.less';
 
 const reactContainer = document.getElementById('__react-content');
