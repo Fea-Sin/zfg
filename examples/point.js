@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import Testone, { COLUMN } from 'zfg';
-import '../assets/index.less';
+import Testone, { POINT } from '../src';
+import DATA from '../src/DATA/data';
 
 const reactContainer = document.getElementById('__react-content');
 const bodyContainer = document.getElementsByTagName('body')
@@ -13,23 +12,17 @@ reactContainer.style.cssText = `
                                 margin-bottom: 10px;
                                `;
 
-const data = [
-  { hello: '运动', world: 25 },
-  { hello: '休闲', world: 115 },
-]
-
 const config = {
-  width: 450,
-  height: 300,
   forceFit: true,
 }
+
 
 function render(container) {
   ReactDOM.render(
     <div>
       <Testone />
       <div>
-        <COLUMN data={data} config={config} />
+        <POINT data={DATA} config={config} />
       </div>
     </div>, container
   )

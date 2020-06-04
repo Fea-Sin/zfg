@@ -4,6 +4,7 @@ import zfgPackage from '../package.json';
 import G2 from '@antv/g2';
 import PIE from './PIE';
 import COLUMN from './COLUMN';
+import POINT from './POINT';
 
 class ZFG extends PureComponent {
 
@@ -39,6 +40,7 @@ ZFG.defaultProps = {
 export {
   PIE,
   COLUMN,
+  POINT,
 }
 
 export default ZFG

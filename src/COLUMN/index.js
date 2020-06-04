@@ -41,7 +41,10 @@ class App extends PureComponent {
         )
 
         chart.source(data)
-
+        chart.axis(coordNameArr[1], {
+          title: {},
+          line: {},
+        })
         chart
           .interval()
           .position(setCoordName( coordNameArr ))
