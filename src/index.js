@@ -5,6 +5,8 @@ import G2 from '@antv/g2';
 import PIE from './PIE';
 import COLUMN from './COLUMN';
 import POINT from './POINT';
+import LINE from './LINE';
+import AREA from './AREA';
 
 class ZFG extends PureComponent {
 
@@ -41,6 +43,8 @@ export {
   PIE,
   COLUMN,
   POINT,
+  LINE,
+  AREA,
 }
 
-export default ZFG
+export default ZFG;

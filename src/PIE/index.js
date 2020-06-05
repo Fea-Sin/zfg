@@ -130,7 +130,7 @@ class App extends PureComponent {
           .color('item', config.color || [])
           .label('percent', {
             formatter: (val, item) => {
-              return  val;
+              return  `${item.point.item} ${item.point.count}个占 ${val}`;
             }
           })
           .tooltip('item*percent', (item, percent) => {

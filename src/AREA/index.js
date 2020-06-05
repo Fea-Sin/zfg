@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
+import IsEqual from 'lodash/isEqual';
 
 class App extends React.Component {
 
@@ -12,19 +13,30 @@ class App extends React.Component {
     this.renderChart()
   }
 
+  componentDidUpdate(prevProps) {
+    if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
+      this.renderChart()
+    }
+  }
+
+  initConfig = () => {
+    const { config } = this.props
+    return config.forceFit
+    ? {
+      forceFit: true,
+      height: config.height,
+    }
+    : {
+      width: config.width,
+      height: config.height,
+    }
+  }
+
   renderChart = () => {
     const { data, config } = this.props
-    const initConfig = () => {
-      return config.forceFit
-      ? {
-        forceFit: true,
-        height: config.height,
-      }
-      : {
-        width: config.width,
-        height: config.height,
-      }
-    }
+
+    const area = config && config.area;
+    const axis = config && config.axis;
 
     if (data && data.length > 0) {
       this.setState({
@@ -34,23 +46,18 @@ class App extends React.Component {
         const chart = new G2.Chart(
           Object.assign({
             container: 'c1',
-          }, initConfig())         
+          }, this.initConfig())         
         );
 
         chart.source(data)
-        chart.scale('value', {
-          alias: '手机数据',
-        })
-        chart.axis('value', {
-          title: {},
-          line: {
-            style: {
-              fill: '#873bf4',
-            }
-          },
-        })
 
-        chart.point().position('feature*value')
+        chart.axis(axis && axis.value, axis && axis.option)
+
+        chart
+          .area()
+          .position(area && area.position)
+          .color(area && area.color)
+
         chart.render()
       })
     }
@@ -60,7 +67,7 @@ class App extends React.Component {
     const { noData } = this.state
     return (
       <div>
-        <div>g2 point</div>
+        <div>g2 area</div>
         {
           noData
           ? <div>暂无数据</div>

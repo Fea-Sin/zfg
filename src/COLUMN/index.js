@@ -43,7 +43,14 @@ class App extends PureComponent {
         chart.source(data)
         chart.axis(coordNameArr[1], {
           title: {},
-          line: {},
+          line: {
+            style: {
+              stroke: 'red',
+            }
+          },
+        })
+        chart.legend(coordNameArr[0], {
+          position: 'top-right',
         })
         chart
           .interval()

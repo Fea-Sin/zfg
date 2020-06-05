@@ -38,19 +38,17 @@ class App extends React.Component {
         );
 
         chart.source(data)
-        chart.scale('value', {
-          alias: '手机数据',
-        })
-        chart.axis('value', {
+
+        chart.axis('sales', {
           title: {},
-          line: {
-            style: {
-              fill: '#873bf4',
-            }
-          },
+          line: {},
         })
 
-        chart.point().position('feature*value')
+        chart
+          .line()
+          .position('year*sales')
+          // .label('sales')
+
         chart.render()
       })
     }
