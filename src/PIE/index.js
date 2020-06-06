@@ -92,11 +92,10 @@ class App extends PureComponent {
     
     const dv = this.dataInit()
     const data = dv.rows
-    console.log('data set is done', dv.rows)
-    const coordNameArr = Object.keys(data[0])
 
     if (data && data.length > 0) {
 
+      // const coordNameArr = Object.keys(data[0])
       this.setState({
         noData: false
       }, () => {
