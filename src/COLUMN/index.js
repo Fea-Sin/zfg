@@ -8,8 +8,9 @@ class App extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      noData: true
+      noData: true,
     }
+    this.ELE = React.createRef()
   }
 
   componentDidMount() {
@@ -34,9 +35,10 @@ class App extends PureComponent {
         noData: false
       }, () => {
 
+        const element = this.ELE.current;
         const chart = new G2.Chart(
           Object.assign({
-            container: 'c1',
+            container: element,
           }, pieConfig())
         )
 
@@ -71,7 +73,7 @@ class App extends PureComponent {
         {
           noData
           ? <div>暂无数据</div>
-          : <div id='c1'></div>
+          : <div ref={this.ELE}></div>
         }
       </div>
     )

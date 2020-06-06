@@ -11,6 +11,7 @@ class App extends PureComponent {
     this.state = {
       noData: true
     }
+    this.ELE = React.createRef()
   }
 
   dataInit = () => {
@@ -100,9 +101,11 @@ class App extends PureComponent {
         noData: false
       }, () => {
 
+        const element = this.ELE.current;
+
         const chart = new G2.Chart(
           Object.assign({
-            container: 'c1',
+            container: element,
           }, pieConfig())
         )
 
@@ -163,7 +166,7 @@ class App extends PureComponent {
         {
           this.state.noData
           ? (<div>暂无数据，此处可以单独抽离成组件</div>)
-          : (<div id='c1'></div>)
+          : (<div ref={this.ELE}></div>)
         }
       </div>
     )

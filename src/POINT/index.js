@@ -4,6 +4,11 @@ import G2 from '@antv/g2';
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.ELE = React.createRef()
+  }
+
   state = {
     noData: true,
   }
@@ -31,9 +36,10 @@ class App extends React.Component {
         noData: false
       }, () => {
 
+        const element = this.ELE.current;
         const chart = new G2.Chart(
           Object.assign({
-            container: 'c1',
+            container: element,
           }, initConfig())         
         );
 
@@ -63,7 +69,7 @@ class App extends React.Component {
         {
           noData
           ? <div>暂无数据</div>
-          : <div id='c1'></div>
+          : <div ref={this.ELE}></div>
         }
       </div>
     )
