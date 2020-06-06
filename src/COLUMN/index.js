@@ -68,7 +68,6 @@ class App extends PureComponent {
    
     return (
       <div>
-        <div>column</div>
         {
           this.state.noData
           ? (<div>暂无数据</div>)

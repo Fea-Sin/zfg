@@ -58,7 +58,6 @@ class App extends React.Component {
     const { noData } = this.state
     return (
       <div>
-        <div>g2 point</div>
         {
           noData
           ? <div>暂无数据</div>

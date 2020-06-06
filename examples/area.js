@@ -19,7 +19,7 @@ const config = {
     color: 'phone',
   },
   axis: {
-    value: 'value',
+    type: 'value',
     option: {
       title: {},
       line: {},

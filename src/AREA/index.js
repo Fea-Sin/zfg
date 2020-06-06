@@ -51,7 +51,7 @@ class App extends React.Component {
 
         chart.source(data)
 
-        chart.axis(axis && axis.value, axis && axis.option)
+        chart.axis(axis && axis.type, axis && axis.option)
 
         chart
           .area()
@@ -67,7 +67,6 @@ class App extends React.Component {
     const { noData } = this.state
     return (
       <div>
-        <div>g2 area</div>
         {
           noData
           ? <div>暂无数据</div>

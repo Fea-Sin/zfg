@@ -16,12 +16,8 @@ class ZFG extends PureComponent {
     }
   }
 
-  componentDidMount() {
-
-  }
-  componentDidUpdate(prevProps, prevState) {
-    // console.log('component up date', prevState)
-  }
+  componentDidMount() {}
+  componentDidUpdate(prevProps, prevState) {}
 
   render () {
     
