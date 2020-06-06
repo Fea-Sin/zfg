@@ -26,9 +26,9 @@ class App extends PureComponent {
         }
     }
 
-    const coordNameArr = Object.keys(data[0])
-
     if (data && data.length > 0) {
+
+      const coordNameArr = Object.keys(data[0])
 
       this.setState({
         noData: false
@@ -65,13 +65,13 @@ class App extends PureComponent {
   }
 
   render() {
-   
+    const { noData } = this.state
     return (
       <div>
         {
-          this.state.noData
-          ? (<div>暂无数据</div>)
-          : (<div id='c1'></div>)
+          noData
+          ? <div>暂无数据</div>
+          : <div id='c1'></div>
         }
       </div>
     )

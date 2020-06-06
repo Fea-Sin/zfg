@@ -20,7 +20,7 @@ const data = [
 
 const config = {
   width: 450,
-  height: 300,
+  height: 500,
   forceFit: true,
 }
 
@@ -28,7 +28,7 @@ function render(container) {
   ReactDOM.render(
     <div>
       <Testone />
-      <div>
+      <div style={{height: 500}}>
         <COLUMN data={data} config={config} />
       </div>
     </div>, container
