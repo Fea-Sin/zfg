@@ -38,6 +38,7 @@ const config = {
       position: 'top-right',
     },
   },
+  empty: <div style={{color: 'green', fontSize: 30}}>no data</div>
 }
 
 

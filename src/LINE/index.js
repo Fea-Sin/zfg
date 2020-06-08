@@ -70,7 +70,7 @@ class App extends React.Component {
           chart
           .line()
           .position(line && line.position)
-          .color(line && line.color)
+          .color(line && line.color, config.color || [])
 
         } else {
           chart
@@ -85,11 +85,20 @@ class App extends React.Component {
 
   render() {
     const { noData } = this.state
+    const { config } = this.props
     return (
       <div>
         {
           noData
-          ? <div>暂无数据</div>
+          ? (
+              <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+                {
+                  config && config.empty
+                  ? config.empty
+                  : <span style={{lineHeight: '40px'}}>暂无数据</span>
+                }
+              </div>
+            )
           : <div ref={this.ELE}></div>
         }
       </div>

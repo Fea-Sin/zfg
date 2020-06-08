@@ -173,13 +173,23 @@ class App extends PureComponent {
   }
 
   render() {
+    const { noData } = this.state
+    const { config } = this.props
    
     return (
       <div>
         {
-          this.state.noData
-          ? (<div>暂无数据</div>)
-          : (<div ref={this.ELE}></div>)
+          noData
+          ? (
+              <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+                {
+                  config && config.empty
+                  ? config.empty
+                  : <span style={{lineHeight: '40px'}}>暂无数据</span>
+                }
+              </div>
+            )
+          : <div ref={this.ELE}></div>
         }
       </div>
     )

@@ -14,6 +14,7 @@ reactContainer.style.cssText = `
 
 const config = {
   forceFit: true,
+  color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   line: {
     position: 'feature*value',
     color: 'phone'
