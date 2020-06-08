@@ -1,6 +1,7 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
+import IsEqual from 'lodash/isEqual';
 
 class App extends PureComponent {
 
@@ -15,6 +16,12 @@ class App extends PureComponent {
 
   componentDidMount() {
     this.renderChart()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
+      this.renderChart()
+    }
   }
 
   initConfig = () => {
