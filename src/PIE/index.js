@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
 import DataSet from '@antv/data-set';
 import insertCss from 'insert-css';
+import IsEqual from 'lodash/isEqual';
 
 class App extends PureComponent {
 
@@ -13,6 +14,20 @@ class App extends PureComponent {
     }
     this.ELE = React.createRef()
   }
+
+  componentDidMount() {
+    this.renderChart()
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      !IsEqual(prevProps.data, this.props.data) ||
+      !IsEqual(prevProps.config, this.props.config) ||
+      !IsEqual(prevProps.dataConfig, this.props.dataConfig)
+    ) {
+      this.renderChart()
+    }
+  }
+
 
   dataInit = () => {
     const { data, config, dataConfig } = this.props
@@ -77,26 +92,25 @@ class App extends PureComponent {
     return dv
   }
 
-  componentDidMount() {
+  initConfig = () => {
     const { config } = this.props
-    const pieConfig = () => {
-      return config.forceFit
-        ? {
-          forceFit: true,
-          height: config.height,
-        }
-        : {
-          width: config.width,
-          height: config.height,
-        }
+    return config.forceFit
+    ? {
+      forceFit: true,
+      height: config.height,
     }
-    
+    : {
+      width: config.width,
+      height: config.height,
+    }
+  }
+
+  renderChart = () => {
+    const { config } = this.props
     const dv = this.dataInit()
     const data = dv.rows
-
     if (data && data.length > 0) {
 
-      // const coordNameArr = Object.keys(data[0])
       this.setState({
         noData: false
       }, () => {
@@ -106,7 +120,7 @@ class App extends PureComponent {
         const chart = new G2.Chart(
           Object.assign({
             container: element,
-          }, pieConfig())
+          }, this.initConfig())
         )
 
         chart.source(data, {
@@ -156,7 +170,6 @@ class App extends PureComponent {
 
       })
     } 
-
   }
 
   render() {
@@ -165,7 +178,7 @@ class App extends PureComponent {
       <div>
         {
           this.state.noData
-          ? (<div>暂无数据，此处可以单独抽离成组件</div>)
+          ? (<div>暂无数据</div>)
           : (<div ref={this.ELE}></div>)
         }
       </div>

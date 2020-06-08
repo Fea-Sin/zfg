@@ -31,7 +31,13 @@ const config = {
     option: {
       range: [0, 1]
     }
-  }
+  },
+  legend: {
+    type: 'phone',
+    option: {
+      position: 'top-right',
+    },
+  },
 }
 
 
