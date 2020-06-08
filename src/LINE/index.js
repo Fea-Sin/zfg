@@ -17,19 +17,25 @@ class App extends React.Component {
     this.renderChart()
   }
 
+  initConfig = () => {
+    const { config } = this.props
+    return config.forceFit
+    ? {
+      forceFit: true,
+      height: config.height,
+    }
+    : {
+      width: config.width,
+      height: config.height,
+    }
+  }
+
   renderChart = () => {
     const { data, config } = this.props
-    const initConfig = () => {
-      return config.forceFit
-      ? {
-        forceFit: true,
-        height: config.height,
-      }
-      : {
-        width: config.width,
-        height: config.height,
-      }
-    }
+
+    const line = config && config.line;
+    const axis = config && config.axis;
+    const legend = config && config.legend;
 
     if (data && data.length > 0) {
       this.setState({
@@ -41,20 +47,25 @@ class App extends React.Component {
         const chart = new G2.Chart(
           Object.assign({
             container: element,
-          }, initConfig())         
+          }, this.initConfig())         
         );
 
         chart.source(data)
 
-        chart.axis('sales', {
-          title: {},
-          line: {},
-        })
+        chart.axis(axis && axis.type, axis && axis.option)
+        chart.legend(legend && legend.type, legend && legend.option)
 
-        chart
+        if (line && line.color) {
+          chart
           .line()
-          .position('year*sales')
-          // .label('sales')
+          .position(line && line.position)
+          .color(line && line.color)
+
+        } else {
+          chart
+          .line()
+          .position(line && line.position)
+        }
 
         chart.render()
       })

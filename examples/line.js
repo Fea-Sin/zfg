@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Testone, { LINE } from '../src';
-import DATA from '../src/DATA/data1';
+import DATA from '../src/DATA/data';
 
 const reactContainer = document.getElementById('__react-content');
 const bodyContainer = document.getElementsByTagName('body')
@@ -14,6 +14,21 @@ reactContainer.style.cssText = `
 
 const config = {
   forceFit: true,
+  line: {
+    position: 'feature*value',
+    color: 'phone'
+  },
+  axis: {
+    type: 'value',
+    option: {
+      // title: {},
+      line: {},
+    }
+  },
+  legend: {
+    type: 'phone',
+    option: false,
+  }
 }
 
 
