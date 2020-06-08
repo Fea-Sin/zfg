@@ -22,6 +22,18 @@ const config = {
   width: 450,
   height: 500,
   forceFit: true,
+  color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
+  column: {
+    position: 'hello*world',
+    color: 'hello'
+  },
+  axis: {
+    type: 'world',
+    option: {
+      title: {},
+      line: {},
+    }
+  },
 }
 
 function render(container) {

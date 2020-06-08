@@ -41,6 +41,7 @@ class App extends React.Component {
 
     const area = config && config.area;
     const axis = config && config.axis;
+    const scale = config && config.scale;
 
     if (data && data.length > 0) {
       this.setState({
@@ -56,11 +57,13 @@ class App extends React.Component {
         chart.source(data)
 
         chart.axis(axis && axis.type, axis && axis.option)
+        chart.scale(scale && scale.type, scale && scale.option)
 
         chart
           .area()
           .position(area && area.position)
-          .color(area && area.color)
+          .color(area && area.color, config.color || [])
+          .shape('smooth')
 
         chart.render()
       })

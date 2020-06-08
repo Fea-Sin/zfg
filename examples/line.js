@@ -28,6 +28,12 @@ const config = {
   legend: {
     type: 'phone',
     option: false,
+  },
+  scale: {
+    type: 'feature',
+    option: {
+      range: [0, 1]
+    }
   }
 }
 

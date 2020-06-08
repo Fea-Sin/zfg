@@ -1,7 +1,6 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import G2 from '@antv/g2';
-import { setCoordName } from '../utils/setChar';
 
 class App extends PureComponent {
 
@@ -13,23 +12,32 @@ class App extends PureComponent {
     this.ELE = React.createRef()
   }
 
+
   componentDidMount() {
-    const { data, config } = this.props
-    const pieConfig = () => {
-      return config.forceFit
-        ? {
-          forceFit: true,
-          height: config.height,
-        }
-        : {
-          width: config.width,
-          height: config.height,
-        }
+    this.renderChart()
+  }
+
+  initConfig = () => {
+    const { config } = this.props
+    return config.forceFit
+    ? {
+      forceFit: true,
+      height: config.height,
     }
+    : {
+      width: config.width,
+      height: config.height,
+    }
+  }
+
+  renderChart = () => {
+    const { data, config } = this.props;
+
+    const column = config && config.column;
+    const axis = config && config.axis;
+    const legend = config && config.legend;
 
     if (data && data.length > 0) {
-
-      const coordNameArr = Object.keys(data[0])
 
       this.setState({
         noData: false
@@ -39,31 +47,29 @@ class App extends PureComponent {
         const chart = new G2.Chart(
           Object.assign({
             container: element,
-          }, pieConfig())
+          }, this.initConfig())
         )
 
         chart.source(data)
-        chart.axis(coordNameArr[1], {
-          title: {},
-          line: {
-            style: {
-              stroke: 'red',
-            }
-          },
-        })
-        chart.legend(coordNameArr[0], {
-          position: 'top-right',
-        })
-        chart
+
+        chart.axis(axis && axis.type, axis && axis.option)
+        chart.legend(legend && legend.type, legend && legend.option)
+        
+        if (column && column.color) {
+          chart
           .interval()
-          .position(setCoordName( coordNameArr ))
-          .color(coordNameArr[0])
+          .position(column && column.position)
+          .color(column && column.color, config.color || [])
+        } else {
+          chart
+          .interval()
+          .position(column && column.position)
+        }
   
         chart.render()
 
       })
     } 
-
   }
 
   render() {
