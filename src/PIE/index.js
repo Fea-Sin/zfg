@@ -106,6 +106,7 @@ class App extends PureComponent {
   }
 
   renderChart = () => {
+    console.log('pie render------', 333333)
     const { config } = this.props
     const dv = this.dataInit()
     const data = dv.rows
@@ -116,7 +117,8 @@ class App extends PureComponent {
       }, () => {
 
         const element = this.ELE.current;
-
+        
+        element.innerHTML = '';
         const chart = new G2.Chart(
           Object.assign({
             container: element,
@@ -175,7 +177,7 @@ class App extends PureComponent {
   render() {
     const { noData } = this.state
     const { config } = this.props
-   
+
     return (
       <div>
         {
