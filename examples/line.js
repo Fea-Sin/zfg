@@ -14,6 +14,7 @@ reactContainer.style.cssText = `
 
 const config = {
   forceFit: true,
+  padding: [100, 50, 50, 30],
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   line: {
     position: 'feature*value',
@@ -28,7 +29,10 @@ const config = {
   },
   legend: {
     type: 'phone',
-    option: false,
+    option: {
+      position: 'top-right',
+      offsetY: -20,
+    }
   },
   scale: {
     type: 'feature',

@@ -14,6 +14,7 @@ reactContainer.style.cssText = `
 
 const config = {
   forceFit: true,
+  padding: [100, 50, 50, 30],
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   area: {
     position: 'feature*value',
@@ -36,6 +37,7 @@ const config = {
     type: 'phone',
     option: {
       position: 'top-right',
+      offsetY: -20,
     },
   },
   empty: <div style={{color: 'green', fontSize: 30}}>no data</div>

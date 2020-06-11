@@ -106,7 +106,6 @@ class App extends PureComponent {
   }
 
   renderChart = () => {
-    console.log('pie render------', 333333)
     const { config } = this.props
     const dv = this.dataInit()
     const data = dv.rows

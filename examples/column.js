@@ -19,9 +19,9 @@ const data = [
 ]
 
 const config = {
-  width: 450,
   height: 500,
   forceFit: true,
+  padding: [100, 50, 80, 60],
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   column: {
     position: 'hello*world',

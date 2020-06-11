@@ -24,10 +24,12 @@ class App extends React.Component {
       ? {
         forceFit: true,
         height: config.height,
+        padding: config.padding,
       }
       : {
         width: config.width,
         height: config.height,
+        padding: config.padding,
       }
     }
 

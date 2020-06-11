@@ -85,7 +85,6 @@ const dataConfig = {
 const sum = 100
 
 const config1 = {
-  width: 400,
   height: 400,
   forceFit: true,
   color: ['#8798ff', '#adb9ff', '#8584ff', '#ffdebc', '#fcb44a'],
