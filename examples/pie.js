@@ -69,9 +69,9 @@ const dataConfig = {
 const sum = 80
 
 const config = {
-  width: 400,
   height: 400,
   forceFit: true,
+  padding: [30, 300, 30, 30],
   color: ['#8798ff', '#ffd481', '#ff90a2'],
   legend: false,
   coord: {

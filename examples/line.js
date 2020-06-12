@@ -18,7 +18,7 @@ const config = {
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   line: {
     position: 'feature*value',
-    color: 'phone'
+    color: 'phone',
   },
   axis: {
     type: 'value',
@@ -35,11 +35,12 @@ const config = {
     }
   },
   scale: {
-    type: 'feature',
-    option: {
-      range: [0, 1]
+    feature: {
+      // type: 'linear',
+      range: [0, 1],
+      nice: true,
     }
-  }
+  },
 }
 
 

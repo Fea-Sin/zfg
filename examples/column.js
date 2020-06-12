@@ -34,6 +34,10 @@ const config = {
       line: {},
     }
   },
+  active: {
+    type: 'active-region',
+    option: false,
+  }
 }
 
 function render(container) {

@@ -41,11 +41,7 @@ class App extends React.Component {
 
   renderChart = () => {
     const { data, config } = this.props
-
-    const line = config && config.line;
-    const axis = config && config.axis;
-    const legend = config && config.legend;
-    const scale = config && config.scale;
+    const { line, axis, legend, scale } = config
 
     if (data && data.length > 0) {
       this.setState({
@@ -64,8 +60,8 @@ class App extends React.Component {
 
         chart.axis(axis && axis.type, axis && axis.option)
         chart.legend(legend && legend.type, legend && legend.option)
-        if (scale && scale.type) {
-          chart.scale(scale.type, scale.option)
+        if (scale) {
+          chart.scale(scale)
         }
 
         if (line && line.color) {

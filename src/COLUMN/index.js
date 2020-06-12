@@ -41,10 +41,7 @@ class App extends PureComponent {
 
   renderChart = () => {
     const { data, config } = this.props;
-
-    const column = config && config.column;
-    const axis = config && config.axis;
-    const legend = config && config.legend;
+    const { column, axis, legend, active } = config;
 
     if (data && data.length > 0) {
 
@@ -53,6 +50,14 @@ class App extends PureComponent {
       }, () => {
 
         const element = this.ELE.current;
+        G2.registerInteraction('active-region', {
+          start: [{ trigger: 'plot:mousemove', action: 'active-region:hide' }],
+          end: [{ trigger: 'plot:mouseleave', action: 'active-region:hide' }],
+        });
+        G2.registerInteraction('element-highlight', {
+          start: [{ trigger: 'element:mouseenter', action: 'element-highlight:highlight' }],
+          end: [{ trigger: 'element:mouseleave', action: 'element-highlight:reset' }],
+        });
         const chart = new G2.Chart(
           Object.assign({
             container: element,
@@ -63,6 +68,9 @@ class App extends PureComponent {
 
         chart.axis(axis && axis.type, axis && axis.option)
         chart.legend(legend && legend.type, legend && legend.option)
+        if (active && !active.option) {
+          // chart.removeInteraction(active.type);
+        }
         
         if (column && column.color) {
           chart
