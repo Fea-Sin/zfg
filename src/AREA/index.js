@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import G2 from '@antv/g2';
+import { Chart, registerInteraction, Geometry } from '@antv/g2';
 import IsEqual from 'lodash/isEqual';
+
+// const data1 = [
+//   { genre: 'Sports', sold: 275 },
+//   { genre: 'Strategy', sold: 115 },
+//   { genre: 'Action', sold: 120 },
+//   { genre: 'Shooter', sold: 350 },
+//   { genre: 'Other', sold: 150 },
+// ];
 
 class App extends React.Component {
   constructor(props) {
@@ -25,9 +33,9 @@ class App extends React.Component {
 
   initConfig = () => {
     const { config } = this.props
-    return config.forceFit
+    return config.autoFit
     ? {
-      forceFit: true,
+      autoFit: true,
       height: config.height,
       padding: config.padding,
     }
@@ -40,24 +48,30 @@ class App extends React.Component {
 
   renderChart = () => {
     const { data, config } = this.props
-
-    const area = config && config.area;
-    const axis = config && config.axis;
-    const scale = config && config.scale;
-    const legend = config && config.legend;
-
     if (data && data.length > 0) {
+
+      const { area, axis, scale, legend } = config
+
       this.setState({
         noData: false
       }, () => {
         const element = this.ELE.current;
-        const chart = new G2.Chart(
+
+        registerInteraction('tooltip', {
+          start: [{ trigger: 'plot:mousemove', action: 'tooltip:show' }],
+          end: [{ trigger: 'plot:mouseleave', action: 'tooltip:hide' }],
+        });
+        registerInteraction('element-highlight', {
+          start: [{ trigger: 'element:mouseenter', action: 'element-highlight:highlight' }],
+          end: [{ trigger: 'element:mouseleave', action: 'element-highlight:reset' }],
+        });
+  
+        const chart = new Chart(
           Object.assign({
             container: element,
-          }, this.initConfig())         
-        );
-
-        chart.source(data)
+          }, this.initConfig())
+        )
+        chart.data(data);
 
         chart.axis(axis && axis.type, axis && axis.option)
         chart.scale(scale && scale.type, scale && scale.option)
@@ -65,14 +79,29 @@ class App extends React.Component {
           chart.legend(legend.type, legend.option)
         }
 
-        chart
-          .area()
-          .position(area && area.position)
-          .color(area && area.color, config.color || [])
-          .shape('smooth')
+        chart.tooltip({
+          showCrosshairs: true,
+          shared: true,
+        });
 
-        chart.render()
+        chart
+        .area()
+        .position(area && area.position)
+        .color(area && area.color, config.color)
+        .shape('smooth')
+        .style({
+          // stroke: 'l(90) 0:#5B74FF 1:#E4E8FF',
+          fillOpacity: 0.85,
+        })
+        
+        // chart.interaction('element-range-active');
+        // chart.interaction('tooltip');
+        // chart.interaction('element-highlight');
+        // chart.interaction('element-active');
+
+        chart.render();
       })
+
     }
   }
 

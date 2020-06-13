@@ -13,9 +13,10 @@ reactContainer.style.cssText = `
                                `;
 
 const config = {
-  forceFit: true,
-  padding: [100, 50, 50, 30],
-  color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
+  autoFit: true,
+  height: 300,
+  padding: [50, 50, 50, 60],
+  color: ['l(90) 0:#5B74FF 1:#E4E8FF', 'l(90) 0:#FACC14 1:#FFF1D0','l(90) 0:#F5506C 1:#FFEEEE'],
   area: {
     position: 'feature*value',
     color: 'phone',
@@ -24,7 +25,11 @@ const config = {
     type: 'value',
     option: {
       title: {},
-      line: {},
+      line: {
+        style: {
+          stroke: '#e3e2e1'
+        }
+      },
     }
   },
   scale: {
@@ -37,7 +42,7 @@ const config = {
     type: 'phone',
     option: {
       position: 'top-right',
-      offsetY: -20,
+      // offsetY: -20,
     },
   },
   empty: <div style={{color: 'green', fontSize: 30}}>no data</div>

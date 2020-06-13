@@ -50,14 +50,7 @@ class App extends PureComponent {
       }, () => {
 
         const element = this.ELE.current;
-        G2.registerInteraction('active-region', {
-          start: [{ trigger: 'plot:mousemove', action: 'active-region:hide' }],
-          end: [{ trigger: 'plot:mouseleave', action: 'active-region:hide' }],
-        });
-        G2.registerInteraction('element-highlight', {
-          start: [{ trigger: 'element:mouseenter', action: 'element-highlight:highlight' }],
-          end: [{ trigger: 'element:mouseleave', action: 'element-highlight:reset' }],
-        });
+
         const chart = new G2.Chart(
           Object.assign({
             container: element,
@@ -82,6 +75,7 @@ class App extends PureComponent {
           .interval()
           .position(column && column.position)
         }
+        // chart.interaction('element-active')
   
         chart.render()
 

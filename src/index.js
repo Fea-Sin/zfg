@@ -1,7 +1,6 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
 import zfgPackage from '../package.json';
-import G2 from '@antv/g2';
 import PIE from './PIE';
 import COLUMN from './COLUMN';
 import POINT from './POINT';
@@ -24,7 +23,6 @@ class ZFG extends PureComponent {
     return (
       <div>
         <div>{`ZFG version ${zfgPackage.version}`}</div>
-        <div>{`G2 version ${G2.version}`}</div>
       </div>
     )
   }
