@@ -13,7 +13,8 @@ reactContainer.style.cssText = `
                                `;
 
 const config = {
-  forceFit: true,
+  autoFit: true,
+  height: 300,
   padding: [100, 50, 50, 30],
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   line: {
@@ -24,7 +25,11 @@ const config = {
     type: 'value',
     option: {
       // title: {},
-      line: {},
+      line: {
+        style: {
+          stroke: '#d5d5d5',
+        }
+      },
     }
   },
   legend: {

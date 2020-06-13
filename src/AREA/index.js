@@ -48,10 +48,9 @@ class App extends React.Component {
 
   renderChart = () => {
     const { data, config } = this.props
+    const { area, axis, scale, legend } = config
+    
     if (data && data.length > 0) {
-
-      const { area, axis, scale, legend } = config
-
       this.setState({
         noData: false
       }, () => {

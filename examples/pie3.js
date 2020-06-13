@@ -67,9 +67,8 @@ const dataConfig = {
 }
 
 const config = {
-  width: 400,
+  autoFit: true,
   height: 400,
-  forceFit: true,
   color: ['#8798ff', '#ffd481', '#ff90a2'],
   coord: {
     theta: {

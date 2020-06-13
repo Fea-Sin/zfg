@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import G2 from '@antv/g2';
+import { Chart } from '@antv/g2';
 
 class App extends React.Component {
 
@@ -17,21 +17,23 @@ class App extends React.Component {
     this.renderChart()
   }
 
+  initConfig = () => {
+    const { config } = this.props
+    return config.autoFit
+    ? {
+      autoFit: true,
+      height: config.height,
+      padding: config.padding,
+    }
+    : {
+      width: config.width,
+      height: config.height,
+      padding: config.padding,
+    }
+  }
+
   renderChart = () => {
     const { data, config } = this.props
-    const initConfig = () => {
-      return config.forceFit
-      ? {
-        forceFit: true,
-        height: config.height,
-        padding: config.padding,
-      }
-      : {
-        width: config.width,
-        height: config.height,
-        padding: config.padding,
-      }
-    }
 
     if (data && data.length > 0) {
       this.setState({
@@ -39,13 +41,14 @@ class App extends React.Component {
       }, () => {
 
         const element = this.ELE.current;
-        const chart = new G2.Chart(
+        const chart = new Chart(
           Object.assign({
             container: element,
-          }, initConfig())         
+          }, this.initConfig())         
         );
 
-        chart.source(data)
+        chart.data(data);
+
         chart.scale('value', {
           alias: '手机数据',
         })
@@ -53,7 +56,7 @@ class App extends React.Component {
           title: {},
           line: {
             style: {
-              fill: '#873bf4',
+              stroke: '#d5d5d5',
             }
           },
         })

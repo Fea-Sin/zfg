@@ -66,14 +66,17 @@ const dataConfig = {
   },
 }
 
-const sum = 80
+const sum = 83
 
 const config = {
+  autoFit: true,
   height: 400,
-  forceFit: true,
   padding: [30, 300, 30, 30],
   color: ['#8798ff', '#ffd481', '#ff90a2'],
-  legend: false,
+  legend: {
+    type: 'item',
+    option: false,
+  },
   coord: {
     theta: {
       radius: 0.75,
@@ -81,32 +84,27 @@ const config = {
     }
   },
   guide: {
-    html: {
-      position: [ '50%', '50%' ],
-      html: `<div class="g2-guide-html"><p class="title">${sum}</p><p class="value">总计</p></div>`
+    topText: {
+      position: ['50%', '50%'],
+      content: sum,
+      style: {
+        fontSize: 32,
+        fill: 'l(90) 0:#5B74FF 1:#E4E8FF',
+        textAlign: 'center',
+      },
+      offsetY: -20,     
+    },
+    downText: {
+      position: ['50%', '50%'],
+      content: '总计',
+      style: {
+        fontSize: 14,
+        fill: '#8c8c8c',
+        textAlign: 'center',
+      },
+      offsetY: 15,
     }
-  },
-  style: `
-    .g2-guide-html {
-        width: 100px;
-        height: 80px;
-        vertical-align: middle;
-        text-align: center;
-        line-height: 0.2;
-    }
-
-    .g2-guide-html .title {
-        font-size: 32px;
-        color: #000;
-        font-weight: bold;
-    }
-
-    .g2-guide-html .value {
-        font-size: 12px;
-        color: #8c8c8c;
-        font-weight: 300;
-    }    
-  `
+  }
 }
 
 function render(container) {

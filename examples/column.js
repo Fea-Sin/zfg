@@ -19,8 +19,8 @@ const data = [
 ]
 
 const config = {
+  autoFit: true,
   height: 500,
-  forceFit: true,
   padding: [100, 50, 80, 60],
   color: ['#FFD378', '#647BFC', '#DCE1FF', '#FF899D'],
   column: {
@@ -31,7 +31,11 @@ const config = {
     type: 'world',
     option: {
       title: {},
-      line: {},
+      line: {
+        style: {
+          stroke: '#d5d5d5',
+        }
+      },
     }
   },
   active: {

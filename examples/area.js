@@ -27,7 +27,7 @@ const config = {
       title: {},
       line: {
         style: {
-          stroke: '#e3e2e1'
+          stroke: '#d5d5d5',
         }
       },
     }

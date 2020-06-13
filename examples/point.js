@@ -13,7 +13,8 @@ reactContainer.style.cssText = `
                                `;
 
 const config = {
-  forceFit: true,
+  autoFit: true,
+  height: 300,
 }
 
 

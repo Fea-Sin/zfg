@@ -1,6 +1,6 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
-import G2 from '@antv/g2';
+import { Chart } from '@antv/g2';
 import IsEqual from 'lodash/isEqual';
 
 class App extends PureComponent {
@@ -12,7 +12,6 @@ class App extends PureComponent {
     }
     this.ELE = React.createRef()
   }
-
 
   componentDidMount() {
     this.renderChart()
@@ -26,9 +25,9 @@ class App extends PureComponent {
 
   initConfig = () => {
     const { config } = this.props
-    return config.forceFit
+    return config.autoFit
     ? {
-      forceFit: true,
+      autoFit: true,
       height: config.height,
       padding: config.padding,
     }
@@ -51,25 +50,26 @@ class App extends PureComponent {
 
         const element = this.ELE.current;
 
-        const chart = new G2.Chart(
+        const chart = new Chart(
           Object.assign({
             container: element,
           }, this.initConfig())
         )
 
-        chart.source(data)
+        chart.data(data);
 
         chart.axis(axis && axis.type, axis && axis.option)
         chart.legend(legend && legend.type, legend && legend.option)
-        if (active && !active.option) {
-          // chart.removeInteraction(active.type);
-        }
+
+        chart.tooltip({
+          showCrosshairs: true,
+        });
         
         if (column && column.color) {
           chart
           .interval()
           .position(column && column.position)
-          .color(column && column.color, config.color || [])
+          .color(column && column.color, config.color)
         } else {
           chart
           .interval()

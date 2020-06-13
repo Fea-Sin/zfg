@@ -82,64 +82,23 @@ const dataConfig = {
   },
 }
 
-const sum = 100
-
-const config1 = {
-  height: 400,
-  forceFit: true,
-  color: ['#8798ff', '#adb9ff', '#8584ff', '#ffdebc', '#fcb44a'],
-  legend: {
-    position: 'right-center',
-    offsetX: -100,
-    clickable: false  
-  },
-  coord: {
-    theta: {
-      radius: 0.75,
-      innerRadius: 0.6,
-    }
-  },
-  guide: {
-    html: {
-      position: [ '50%', '50%' ],
-      html: `<div class="g2-guide-html"><p class="title">${sum}</p><p class="value">总计</p></div>`
-    }
-  },
-  style: `
-    .g2-guide-html {
-        width: 100px;
-        height: 80px;
-        vertical-align: middle;
-        text-align: center;
-        line-height: 0.2;
-    }
-
-    .g2-guide-html .title {
-        font-size: 32px;
-        color: #000;
-        font-weight: bold;
-    }
-
-    .g2-guide-html .value {
-        font-size: 12px;
-        color: #8c8c8c;
-        font-weight: 300;
-    }    
-  `
-}
-
 function render(container) {
   let sum = 33
 
   const config = {
-    width: 400,
+    autoFit: true,
     height: 400,
-    forceFit: true,
     color: ['#8798ff', '#adb9ff', '#8584ff', '#ffdebc', '#fcb44a'],
     legend: {
       position: 'right-center',
       offsetX: -100,
       clickable: false  
+    },
+    legend: {
+      type: 'item',
+      option: {
+        position: 'right',
+      }
     },
     coord: {
       theta: {
@@ -148,32 +107,27 @@ function render(container) {
       }
     },
     guide: {
-      html: {
-        position: [ '50%', '50%' ],
-        html: `<div class="g2-guide-html"><p class="title">${sum}</p><p class="value">总计</p></div>`
-      }
-    },
-    style: `
-      .g2-guide-html {
-          width: 100px;
-          height: 80px;
-          vertical-align: middle;
-          text-align: center;
-          line-height: 0.2;
-      }
-  
-      .g2-guide-html .title {
-          font-size: 32px;
-          color: #000;
-          font-weight: bold;
-      }
-  
-      .g2-guide-html .value {
-          font-size: 12px;
-          color: #8c8c8c;
-          font-weight: 300;
-      }    
-    `
+      topText: {
+        position: ['50%', '50%'],
+        content: sum,
+        style: {
+          fontSize: 32,
+          fill: 'l(90) 0:#5B74FF 1:#E4E8FF',
+          textAlign: 'center',
+        },
+        offsetY: -20,     
+      },
+      downText: {
+        position: ['50%', '50%'],
+        content: '总计',
+        style: {
+          fontSize: 14,
+          fill: '#8c8c8c',
+          textAlign: 'center',
+        },
+        offsetY: 15,
+      }      
+    }
   }
 
   ReactDOM.render(

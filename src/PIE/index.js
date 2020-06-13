@@ -1,8 +1,7 @@
 import React, { PureComponent, Component } from 'react';
 import PropTypes from 'prop-types';
-import G2 from '@antv/g2';
+import { Chart } from '@antv/g2';
 import DataSet from '@antv/data-set';
-import insertCss from 'insert-css';
 import IsEqual from 'lodash/isEqual';
 
 class App extends PureComponent {
@@ -28,17 +27,9 @@ class App extends PureComponent {
     }
   }
 
-
   dataInit = () => {
     const { data, config, dataConfig } = this.props
     const ds = new DataSet()
-
-    /**
-     * set config css
-     */
-    if (config.style) {
-      insertCss(config.style)
-    }
 
     // 创建 DataView
     const dv = ds.createView().source(data)
@@ -94,9 +85,9 @@ class App extends PureComponent {
 
   initConfig = () => {
     const { config } = this.props
-    return config.forceFit
+    return config.autoFit
     ? {
-      forceFit: true,
+      autoFit: true,
       height: config.height,
       padding: config.padding,
     }
@@ -109,10 +100,11 @@ class App extends PureComponent {
 
   renderChart = () => {
     const { config } = this.props
+    const { legend, coord, guide } = config
     const dv = this.dataInit()
     const data = dv.rows
-    if (data && data.length > 0) {
 
+    if (data && data.length > 0) {
       this.setState({
         noData: false
       }, () => {
@@ -120,57 +112,58 @@ class App extends PureComponent {
         const element = this.ELE.current;
         
         element.innerHTML = '';
-        const chart = new G2.Chart(
+        const chart = new Chart(
           Object.assign({
             container: element,
           }, this.initConfig())
         )
 
-        chart.source(data, {
-          percent: {
-            formatter: val => {
-              val = ( (val * 100).toFixed(2) ) + '%';
-              return val;
-            }
-          }
-        })
+        chart.data(data)
 
-        chart.legend(config.legend)
+        chart.scale('percent', {
+          formatter: (val) => {
+            val = (val * 100).toFixed(2) + '%';
+            return val;
+          },
+        });
 
-        chart.coord('theta', config.coord.theta)
+        chart.legend(legend && legend.type, legend && legend.option)
+        chart.coordinate('theta', coord && coord.theta);
 
         chart.tooltip({
           showTitle: false,
-          itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
-        })
+          showMarkers: false,
+          itemTpl: '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>',
+        });
 
-        chart.intervalStack()
+        // 辅助文本
+        if (guide) {
+          chart
+          .annotation()
+          .text(guide && guide.topText)
+          .text(guide && guide.downText)
+        }
+
+        chart
+          .interval()
+          .adjust('stack')
           .position('percent')
-          .color('item', config.color || [])
-          .label('percent', {
-            formatter: (val, item) => {
-              return  `${item.point.item} ${item.point.count}个占 ${val}`;
+          .color('item', config.color)
+          .label('percent', (percent) => {
+            return {
+              content: (data) => {
+                return `${data.item} ${data.count}个占 ${(percent * 100).toFixed(2)}%`;
+              },
             }
           })
           .tooltip('item*percent', (item, percent) => {
-            percent = ( (percent * 100).toFixed(2) ) + '%';
+            percent = (percent * 100).toFixed(2) + '%';
             return {
               name: item,
               value: percent
             }
           })
-          .style({
-            lineWidth: 0,
-            stroke: '#fff',
-          })
-        
-        // guide 渲染
-        if (config.guide && config.guide.html) {
-          chart.guide().html(config.guide.html);
-        }
-  
         chart.render()
-
       })
     } 
   }
