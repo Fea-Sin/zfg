@@ -16,7 +16,7 @@ const config = {
   autoFit: true,
   height: 300,
   padding: [50, 50, 50, 60],
-  color: ['l(90) 0:#5B74FF 1:#E4E8FF', 'l(90) 0:#FACC14 1:#FFF1D0','l(90) 0:#F5506C 1:#FFEEEE'],
+  color: ['l(90) 0:#5B74FF 1:#E4E8FF', 'l(90) 0:#FACC14 1:#FFF1D0', 'l(90) 0:#F5506C 1:#FFEEEE'],
   area: {
     position: 'feature*value',
     color: 'phone',
@@ -35,7 +35,7 @@ const config = {
   scale: {
     type: 'feature',
     option: {
-      range: [0, 1]
+      range: [0, 1],
     }
   },
   legend: {

@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import { Chart, registerInteraction, Geometry } from '@antv/g2';
 import IsEqual from 'lodash/isEqual';
 
-// const data1 = [
-//   { genre: 'Sports', sold: 275 },
-//   { genre: 'Strategy', sold: 115 },
-//   { genre: 'Action', sold: 120 },
-//   { genre: 'Shooter', sold: 350 },
-//   { genre: 'Other', sold: 150 },
-// ];
-
 class App extends React.Component {
   constructor(props) {
     super(props)

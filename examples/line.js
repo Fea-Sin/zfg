@@ -36,7 +36,7 @@ const config = {
     type: 'phone',
     option: {
       position: 'top-right',
-      offsetY: -20,
+      // offsetY: -20,
     }
   },
   scale: {
