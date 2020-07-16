@@ -6,6 +6,7 @@ import COLUMN from './COLUMN';
 import POINT from './POINT';
 import LINE from './LINE';
 import AREA from './AREA';
+import INTERVAL from './INTERVAL';
 
 class ZFG extends PureComponent {
 
@@ -39,6 +40,7 @@ export {
   POINT,
   LINE,
   AREA,
+  INTERVAL,
 }
 
 export default ZFG;

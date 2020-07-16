@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chart, registerInteraction } from '@antv/g2';
+import { Chart } from '@antv/g2';
 import IsEqual from 'lodash/isEqual';
+import IsArray from 'lodash/isArray';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class App extends React.Component {
   componentDidMount() {
     this.renderChart()
   }
-
   componentDidUpdate(prevProps) {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
       this.renderChart()
@@ -40,65 +40,56 @@ class App extends React.Component {
 
   renderChart = () => {
     const { data, config } = this.props
-    const { area, axis, scale, legend } = config
-    
+    const { interval, tooltip, legend, axis } = config
+
     if (data && data.length > 0) {
       this.setState({
         noData: false
       }, () => {
         const element = this.ELE.current;
 
-        registerInteraction('tooltip', {
-          start: [{ trigger: 'plot:mousemove', action: 'tooltip:show' }],
-          end: [{ trigger: 'plot:mouseleave', action: 'tooltip:hide' }],
-        });
-        registerInteraction('element-highlight', {
-          start: [{ trigger: 'element:mouseenter', action: 'element-highlight:highlight' }],
-          end: [{ trigger: 'element:mouseleave', action: 'element-highlight:reset' }],
-        });
-  
         const chart = new Chart(
           Object.assign({
             container: element,
           }, this.initConfig())
         )
+        chart.coordinate().transpose().scale(1, -1);
         chart.data(data);
-
-        chart.axis(axis && axis.type, axis && axis.option)
-        chart.scale(scale && scale.type, scale && scale.option)
-        if (legend && legend.type) {
-          chart.legend(legend.type, legend.option)
+        chart.legend(legend);
+        chart.axis(axis);
+        if (axis && IsArray(axis)) {
+          axis.forEach(item => {
+            chart.axis(item.type, item.option)
+          })
         }
-
-        chart.tooltip({
-          showCrosshairs: true,
-          shared: true,
-        });
-
+        chart.tooltip(tooltip);
         chart
-        .area()
-        .position(area && area.position)
-        .color(area && area.color, config.color)
-        .shape('smooth')
-        .style({
-          // stroke: 'l(90) 0:#5B74FF 1:#E4E8FF',
-          fillOpacity: 0.85,
-        })
-        
-        // chart.interaction('element-range-active');
-        // chart.interaction('tooltip');
-        // chart.interaction('element-highlight');
-        // chart.interaction('element-active');
+        .interval()
+        .position(interval && interval.position)
+        .color(interval && interval.color, config.color)
+        .label(
+          interval && interval.label && interval.label.type,
+          interval.label && interval.label.option
+        )
+        .adjust([
+          {
+            type: 'dodge',
+            marginRatio: 0.3,
+          },
+        ]);
 
+        chart.interaction('active-region');
+        chart.interaction('legend-highlight');
         chart.render();
-      })
 
+      })
     }
   }
 
   render() {
     const { noData } = this.state
     const { config } = this.props
+
     return (
       <div>
         {
