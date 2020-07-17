@@ -1,0 +1,33 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Testone, { CHINAMAP } from '../src';
+import DATA from '../src/DATA/data-china';
+
+const reactContainer = document.getElementById('__react-content');
+const bodyContainer = document.getElementsByTagName('body')
+bodyContainer[0].style.padding = '10px'
+reactContainer.style.cssText = `
+                                border: 1px solid #11d0bc;
+                                padding: 10px;
+                                margin-bottom: 10px;
+                               `;
+
+const config = {
+  autoFit: true,
+  height: 550,
+  width: 800,
+  empty: <div style={{color: 'green', fontSize: 30}}>no data</div>
+}
+
+
+function render(container) {
+  ReactDOM.render(
+    <div>
+      <div>
+        <CHINAMAP data={DATA} config={config} />
+      </div>
+    </div>, container
+  )
+}
+
+render(reactContainer)

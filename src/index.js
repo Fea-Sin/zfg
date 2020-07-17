@@ -7,6 +7,7 @@ import POINT from './POINT';
 import LINE from './LINE';
 import AREA from './AREA';
 import INTERVAL from './INTERVAL';
+import CHINAMAP from './CHINA';
 
 class ZFG extends PureComponent {
 
@@ -41,6 +42,7 @@ export {
   LINE,
   AREA,
   INTERVAL,
+  CHINAMAP,
 }
 
 export default ZFG;
