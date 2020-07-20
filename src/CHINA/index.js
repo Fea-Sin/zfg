@@ -32,6 +32,8 @@ class ChinaMap extends React.Component {
       noData: false
     }, () => {
       const element = this.ELE.current;
+      const TYPE = config.china && config.china.type
+      const max = Math.max(...data.map(item => item[TYPE]));
 
       const scene = new Scene({
         id: element,
@@ -52,7 +54,7 @@ class ChinaMap extends React.Component {
       scene.on('loaded', () => {
         new CountryLayer(scene, {
           data: data,
-          joinBy: [ 'NAME_CHN', 'name' ],
+          joinBy: [ 'NAME_CHN', config.china && config.china.label ],
           depth: 1,
           autoFit: true,
           chinaNationalWidth: 1,
@@ -65,18 +67,19 @@ class ChinaMap extends React.Component {
             color: '#f8f7ff',
           },
           bubble: {
-            enable: true,
+            enable: config.bubble && config.bubble.enable,
             size: {
-              field: 'value',
-              values: [ 3, 20 ]
-            }
+              field: TYPE,
+              values: props => {
+                return props > 0
+                  ? Math.max( Math.floor( (props/max)*25 ), 8 )
+                  : 0
+              }
+            },
+            color: config.bubble && config.bubble.color,
+            style: config.bubble && config.bubble.style,
           },
-          popup: {
-            enable: true,
-            Html: props => {
-              return `<span>${props.NAME_CHN}:</span><span>${props.value}</span>`;
-            }
-          }
+          popup: config.popup,
         });
 
       });
