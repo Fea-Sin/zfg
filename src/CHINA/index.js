@@ -28,63 +28,67 @@ class ChinaMap extends React.Component {
 
   renderChart = () => {
     const { data, config } = this.props
-    this.setState({
-      noData: false
-    }, () => {
-      const element = this.ELE.current;
-      const TYPE = config.china && config.china.type
-      const max = Math.max(...data.map(item => item[TYPE]));
-
-      const scene = new Scene({
-        id: element,
-        logoVisible: false,
-        antialias: true,
-        map: new Mapbox({
-          center: [ 116.2825, 39.9 ],
-          pitch: 0,
-          style: 'blank',
-          zoom: 3,
-          minZoom: 3,
-          maxZoom: 3,
-        })
-      });
-      scene.setMapStatus({
-        dragEnable: false,
-      })
-      scene.on('loaded', () => {
-        new CountryLayer(scene, {
-          data: data,
-          joinBy: [ 'NAME_CHN', config.china && config.china.label ],
-          depth: 1,
-          autoFit: true,
-          chinaNationalWidth: 1,
-          chinaNationalStroke: '#dcdade',
-          coastlineWidth: 1,
-          coastlineStroke: '#dcdade',
-          showBorder: true,
-          provinceStroke: '#ccc9d5',
-          fill: {
-            color: '#f8f7ff',
-          },
-          bubble: {
-            enable: config.bubble && config.bubble.enable,
-            size: {
-              field: TYPE,
-              values: props => {
-                return props > 0
-                  ? Math.max( Math.floor( (props/max)*25 ), 8 )
-                  : 0
-              }
-            },
-            color: config.bubble && config.bubble.color,
-            style: config.bubble && config.bubble.style,
-          },
-          popup: config.popup,
+    if (data && data.length > 0) {
+      this.setState({
+        noData: false
+      }, () => {
+        const element = this.ELE.current;
+        const { china } = config;
+        const TYPE = china && china.type;
+        const max = Math.max(...data.map(item => item[TYPE]));
+        const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
+        const MINSIZE = ( china && china.bubbleMinSize ) || 5;
+  
+        const scene = new Scene({
+          id: element,
+          logoVisible: false,
+          antialias: true,
+          map: new Mapbox({
+            center: [ 116.2825, 39.9 ],
+            pitch: 0,
+            style: 'blank',
+            zoom: china && china.zoom,
+            minZoom: china && china.zoom,
+            maxZoom: china && china.zoom,
+          })
         });
-
-      });
-      
-    })
+        scene.setMapStatus({
+          dragEnable: false,
+        })
+        scene.on('loaded', () => {
+          new CountryLayer(scene, {
+            data: data,
+            joinBy: [ 'NAME_CHN', china && china.label ],
+            depth: 1,
+            autoFit: true,
+            chinaNationalWidth: 1,
+            chinaNationalStroke: '#dcdade',
+            coastlineWidth: 1,
+            coastlineStroke: '#dcdade',
+            showBorder: true,
+            provinceStroke: '#ccc9d5',
+            fill: {
+              color: '#f8f7ff',
+            },
+            bubble: {
+              enable: config.bubble && config.bubble.enable,
+              size: {
+                field: TYPE,
+                values: props => {
+                  return props > 0
+                    ? Math.max( Math.floor( (props/max)*MAXSIZE ), MINSIZE )
+                    : 0
+                }
+              },
+              color: config.bubble && config.bubble.color,
+              style: config.bubble && config.bubble.style,
+            },
+            popup: config.popup,
+          });
+        });
+      })
+    }
+    
   }
 
   render() {
@@ -133,7 +137,7 @@ ChinaMap.defaultProps = {
   data: [],
   config: {
     width: 600,
-    height: 600,
+    height: 200,
   }
 }
 

@@ -75,10 +75,8 @@ const config = {
 function render(container) {
   ReactDOM.render(
     <div>
-      <Testone />
-      <div>
-        <INTERVAL data={DATA} config={config} />
-      </div>
+      <INTERVAL data={DATA} config={config} />
+      {/* <INTERVAL /> */}
     </div>, container
   )
 }

@@ -14,11 +14,14 @@ reactContainer.style.cssText = `
 
 const config = {
   autoFit: true,
-  height: 550,
+  height: 450,
   width: 800,
   china: {
     type: 'customer',
     label: 'name',
+    zoom: 2.5,
+    bubbleMaxSize: 25,
+    bubbleMinSize: 8,
   },
   bubble: {
     enable: true,
@@ -50,9 +53,8 @@ const config = {
 function render(container) {
   ReactDOM.render(
     <div>
-      <div>
-        <CHINAMAP data={DATA} config={config} />
-      </div>
+      <CHINAMAP data={DATA} config={config} />
+      {/* <CHINAMAP config={config} /> */}
     </div>, container
   )
 }
