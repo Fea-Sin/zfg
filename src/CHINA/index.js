@@ -33,6 +33,7 @@ class ChinaMap extends React.Component {
         noData: false
       }, () => {
         const element = this.ELE.current;
+        element.innerHTML = '';
         const { china } = config;
         const TYPE = china && china.type;
         const max = Math.max(...data.map(item => item[TYPE]));

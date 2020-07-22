@@ -14,12 +14,12 @@ reactContainer.style.cssText = `
 
 const config = {
   autoFit: true,
-  height: 450,
+  height: 550,
   width: 800,
   china: {
     type: 'customer',
     label: 'name',
-    zoom: 2.5,
+    zoom: 3,
     bubbleMaxSize: 25,
     bubbleMinSize: 8,
   },
