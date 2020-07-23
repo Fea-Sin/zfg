@@ -9,6 +9,7 @@ class ChinaMap extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
+    this.SCENE = null;
   }
 
   state = {
@@ -26,6 +27,10 @@ class ChinaMap extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.SCENE.destroy()
+  }
+
   renderChart = () => {
     const { data, config } = this.props
     if (data && data.length > 0) {
@@ -40,7 +45,7 @@ class ChinaMap extends React.Component {
         const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
   
-        const scene = new Scene({
+        this.SCENE = new Scene({
           id: element,
           logoVisible: false,
           antialias: true,
@@ -53,11 +58,11 @@ class ChinaMap extends React.Component {
             maxZoom: china && china.zoom,
           })
         });
-        scene.setMapStatus({
+        this.SCENE.setMapStatus({
           dragEnable: false,
         })
-        scene.on('loaded', () => {
-          new CountryLayer(scene, {
+        this.SCENE.on('loaded', () => {
+          new CountryLayer(this.SCENE, {
             data: data,
             joinBy: [ 'NAME_CHN', china && china.label ],
             depth: 1,
