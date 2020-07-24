@@ -5,11 +5,14 @@ import { Scene } from '@antv/l7';
 import { CountryLayer } from '@antv/l7-district';
 import { Mapbox } from '@antv/l7-maps';
 
+const MAPLABEL = 'CHINAMAP'
+
 class ChinaMap extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
-    this.SCENE = null;
+    this.ID = props.id || MAPLABEL;
+    window[this.ID] = null;
   }
 
   state = {
@@ -23,13 +26,11 @@ class ChinaMap extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
-      this.renderChart()
+      window[this.ID] = null;
+      this.renderChart();
     }
   }
 
-  componentWillUnmount() {
-    this.SCENE.destroy()
-  }
 
   renderChart = () => {
     const { data, config } = this.props
@@ -37,6 +38,12 @@ class ChinaMap extends React.Component {
       this.setState({
         noData: false
       }, () => {
+
+        // 单例模式
+        if (window[this.ID]) {
+          return;
+        }
+
         const element = this.ELE.current;
         element.innerHTML = '';
         const { china } = config;
@@ -44,8 +51,9 @@ class ChinaMap extends React.Component {
         const max = Math.max(...data.map(item => item[TYPE]));
         const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
+        console.log('china chart 构建--------')
   
-        this.SCENE = new Scene({
+        window[this.ID] = new Scene({
           id: element,
           logoVisible: false,
           antialias: true,
@@ -58,11 +66,11 @@ class ChinaMap extends React.Component {
             maxZoom: china && china.zoom,
           })
         });
-        this.SCENE.setMapStatus({
+        window[this.ID].setMapStatus({
           dragEnable: false,
         })
-        this.SCENE.on('loaded', () => {
-          new CountryLayer(this.SCENE, {
+        window[this.ID].on('loaded', () => {
+          new CountryLayer(window[this.ID], {
             data: data,
             joinBy: [ 'NAME_CHN', china && china.label ],
             depth: 1,
