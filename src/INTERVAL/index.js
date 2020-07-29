@@ -8,6 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
+    this.CHART = null;
   }
 
   state = {
@@ -15,12 +16,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log('interval mount 渲染----')
     this.renderChart()
   }
   componentDidUpdate(prevProps) {
+    console.log('interval 更新---')
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
       this.renderChart()
     }
+  }
+
+  componentWillUnmount() {
+    console.log('interval 卸载----')
+    this.CHART = null;
   }
 
   initConfig = () => {
@@ -47,24 +55,25 @@ class App extends React.Component {
         noData: false
       }, () => {
         const element = this.ELE.current;
-        element.innerHTML = '';
+        // element.innerHTML = '';
+        // element.parentNode.removeChild(element)
 
-        const chart = new Chart(
+        this.CHART = new Chart(
           Object.assign({
             container: element,
           }, this.initConfig())
         )
-        chart.coordinate().transpose().scale(1, -1);
-        chart.data(data);
-        chart.legend(legend);
-        chart.axis(axis);
+        this.CHART.coordinate().transpose().scale(1, -1);
+        this.CHART.data(data);
+        this.CHART.legend(legend);
+        this.CHART.axis(axis);
         if (axis && IsArray(axis)) {
           axis.forEach(item => {
-            chart.axis(item.type, item.option)
+            this.CHART.axis(item.type, item.option)
           })
         }
-        chart.tooltip(tooltip);
-        chart
+        this.CHART.tooltip(tooltip);
+        this.CHART
         .interval()
         .position(interval && interval.position)
         .color(interval && interval.color, config.color)
@@ -79,12 +88,17 @@ class App extends React.Component {
           },
         ]);
 
-        chart.interaction('active-region');
-        chart.interaction('legend-highlight');
-        chart.render();
+        this.CHART.interaction('active-region');
+        this.CHART.interaction('legend-highlight');
+        this.CHART.render();
 
       })
     } else {
+      const element = this.ELE.current;
+      if (element) {
+        element.parentNode.removeChild(element)
+      }
+      this.CHART = null;
       this.setState({
         noData: true,
       })
@@ -108,7 +122,7 @@ class App extends React.Component {
                 }
               </div>
             )
-          : <div ref={this.ELE}></div>
+          : <div ref={this.ELE} className='INTERVALCHART'></div>
         }
       </div>
     )

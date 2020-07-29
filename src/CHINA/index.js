@@ -20,16 +20,19 @@ class ChinaMap extends React.Component {
 
 
   componentDidMount() {
+    console.log('china map mount 渲染')
     this.renderChart()
   }
 
   componentDidUpdate(prevProps) {
+    console.log('china map --更新')
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
       this.renderChart();
     }
   }
 
   componentWillUnmount() {
+    console.log('china map 卸载---')
     this.SCENE.destroy();
     this.LAYER.destroy();
     this.SCENE = null;
@@ -45,7 +48,6 @@ class ChinaMap extends React.Component {
       }, () => {
       
         const element = this.ELE.current;
-        element.innerHTML = '';
         const { china } = config;
         const TYPE = china && china.type;
         const max = Math.max(...data.map(item => item[TYPE]));
@@ -105,6 +107,19 @@ class ChinaMap extends React.Component {
 
       })
     } else {
+      const element = this.ELE.current;
+      if (element) {
+        element.parentNode.removeChild(element)
+      }
+      if (this.SCENE) {
+        this.SCENE.destroy();
+      }
+      if (this.LAYER) {
+        this.LAYER.destroy();
+      }
+      this.SCENE = null;
+      this.LAYER = null;
+
       this.setState({
         noData: true
       })
@@ -143,7 +158,7 @@ class ChinaMap extends React.Component {
                 }
               </div>
             )
-          : <div style={BBOX} ref={this.ELE}></div>
+          : <div style={BBOX} ref={this.ELE} className='CHINAMAP'></div>
         }
       </div>
     )
