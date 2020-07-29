@@ -31,4 +31,31 @@ const ProvinceData = [
   }
 ];
 
-export default ProvinceData;
+const data =  [
+  {
+      "distArea":"北京市",
+      "supplyAreaCount":7,
+      "customerAreaCount":5
+  },
+  {
+      "distArea":"黑龙江省",
+      "supplyAreaCount":null,
+      "customerAreaCount":6
+  },
+  {
+      "distArea":"湖北省",
+      "supplyAreaCount":5,
+      "customerAreaCount":null
+  },
+  {
+      "distArea":"广东省",
+      "supplyAreaCount":null,
+      "customerAreaCount":1
+  },
+  {
+      "distArea":"河北省",
+      "supplyAreaCount":10,
+      "customerAreaCount":1
+  }];
+
+export default data;

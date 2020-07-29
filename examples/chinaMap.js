@@ -17,8 +17,8 @@ const config = {
   height: 550,
   width: 800,
   china: {
-    type: 'customer',
-    label: 'name',
+    type: 'supplyAreaCount',
+    label: 'distArea',
     zoom: 3,
     bubbleMaxSize: 25,
     bubbleMinSize: 8,
@@ -38,9 +38,9 @@ const config = {
         <div style="text-align: center; color: #647BFC;">
           <div style="padding-bottom: 15px; font-size: 16px;">${props.NAME_CHN}</div>
           <div style="background-color: #F8F9FB; padding: 10px 0; color: #333;">
-            <span>供应商：</span><span>${props.supply}</span>
+            <span>供应商：</span><span>${props.supplyAreaCount}</span>
             <span style="padding: 0 8px;">|</span>
-            <span>客户：</span><span>${props.customer}</span>
+            <span>客户：</span><span>${props.customerAreaCount}</span>
           </div>
         </div>
       `;

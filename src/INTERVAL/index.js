@@ -47,6 +47,7 @@ class App extends React.Component {
         noData: false
       }, () => {
         const element = this.ELE.current;
+        element.innerHTML = '';
 
         const chart = new Chart(
           Object.assign({
@@ -82,6 +83,10 @@ class App extends React.Component {
         chart.interaction('legend-highlight');
         chart.render();
 
+      })
+    } else {
+      this.setState({
+        noData: true,
       })
     }
   }
