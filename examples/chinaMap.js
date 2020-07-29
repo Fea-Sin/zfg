@@ -53,8 +53,8 @@ const config = {
 function render(container) {
   ReactDOM.render(
     <div>
-      {/* <CHINAMAP data={DATA} config={config} /> */}
-      <CHINAMAP />
+      <CHINAMAP data={DATA} config={config} id='CONE' />
+      {/* <CHINAMAP /> */}
     </div>, container
   )
 }

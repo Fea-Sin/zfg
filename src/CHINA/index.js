@@ -4,14 +4,22 @@ import IsEqual from 'lodash/isEqual';
 import { Scene } from '@antv/l7';
 import { CountryLayer } from '@antv/l7-district';
 import { Mapbox } from '@antv/l7-maps';
+import DomUtils from '../utils/ouiDomUtils';
+
+const ID = 'CHINAID';
+const BBOX = {
+  width: '100%',
+  position: 'absolute',
+  height: '130%',
+  top: 0,
+  left: 0,
+}
 
 
 class ChinaMap extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
-    this.SCENE = null;
-    this.LAYER = null;
   }
 
   state = {
@@ -31,31 +39,28 @@ class ChinaMap extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log('china map 卸载---')
-    this.remove()
-  }
-
-  remove = () => {
-    if (this.SCENE && this.SCENE.destroy) {
-      this.SCENE.destroy();
-    }
-    if (this.LAYER && this.LAYER.destroy) {
-      this.LAYER.destroy();
-    }
-    this.SCENE = null;
-    this.LAYER = null;
-  }
-
 
   renderChart = () => {
-    const { data, config } = this.props
+    const { data, config, id=ID } = this.props
     if (data && data.length > 0) {
       this.setState({
         noData: false
       }, () => {
       
         const element = this.ELE.current;
+        const before = document.getElementById(id)
+
+        // 清除节点
+        if (before && before.parentNode && before.parentNode.removeChild) {
+          before.parentNode.removeChild(before)
+        }
+
+        // 创建元素
+        const dom = document.createElement('div')
+        dom.id = id
+        DomUtils.setStyles(dom, BBOX)
+        element.appendChild(dom)
+
         const { china } = config;
         const TYPE = china && china.type;
         const max = Math.max(...data.map(item => item[TYPE]));
@@ -63,8 +68,8 @@ class ChinaMap extends React.Component {
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
         console.log('china chart 构建--------')
 
-        this.SCENE = new Scene({
-          id: element,
+        const scene = new Scene({
+          id: id,
           logoVisible: false,
           antialias: true,
           map: new Mapbox({
@@ -77,12 +82,12 @@ class ChinaMap extends React.Component {
           })
         });
 
-        this.SCENE.setMapStatus({
+        scene.setMapStatus({
           dragEnable: false,
         })
 
-        this.SCENE.on('loaded', () => {
-          this.LAYER =  new CountryLayer(this.SCENE, {
+        scene.on('loaded', () => {
+          new CountryLayer(scene, {
             data: data,
             joinBy: [ 'NAME_CHN', china && china.label ],
             depth: 1,
@@ -115,19 +120,6 @@ class ChinaMap extends React.Component {
 
       })
     } else {
-      const element = this.ELE.current;
-      if (element) {
-        element.parentNode.removeChild(element)
-      }
-      if (this.SCENE) {
-        this.SCENE.destroy();
-      }
-      if (this.LAYER) {
-        this.LAYER.destroy();
-      }
-      this.SCENE = null;
-      this.LAYER = null;
-
       this.setState({
         noData: true
       })
@@ -145,13 +137,6 @@ class ChinaMap extends React.Component {
       overflow: 'hidden',
       margin: '0 auto',
     }
-    const BBOX = {
-      width: '100%',
-      position: 'absolute',
-      height: '130%',
-      top: 0,
-      left: 0,
-    }
 
     return (
       <div style={ABOx}>
@@ -166,7 +151,7 @@ class ChinaMap extends React.Component {
                 }
               </div>
             )
-          : <div style={BBOX} ref={this.ELE} className='CHINAMAP'></div>
+          : <div style={{width: '100%', height: '100%'}} ref={this.ELE} id='CHINABOX'></div>
         }
       </div>
     )

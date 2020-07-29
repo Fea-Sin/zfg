@@ -51,10 +51,14 @@ class App extends React.Component {
         noData: false
       }, () => {
         const element = this.ELE.current;
+        const before = document.getElementById(id)
         // element.parentNode.removeChild(element)
 
         // 清除节点
-        element.innerHTML = '';
+        // element.innerHTML = '';
+        if (before && before.parentNode && before.parentNode.removeChild) {
+          before.parentNode.removeChild(before)
+        }
 
         // 创建元素
         const dom = document.createElement('div')
