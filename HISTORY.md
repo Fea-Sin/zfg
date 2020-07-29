@@ -1,6 +1,9 @@
 # History
 ----
 
+## 2.1.1 2020-07-29
+重构 interval 图表
+
 ## 2.0.9 2020-07-29
 优化 interval，chinaMap
 

@@ -4,11 +4,12 @@ import { Chart } from '@antv/g2';
 import IsEqual from 'lodash/isEqual';
 import IsArray from 'lodash/isArray';
 
+const ID = 'INTERVALID'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
-    this.CHART = null;
   }
 
   state = {
@@ -24,11 +25,6 @@ class App extends React.Component {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
       this.renderChart()
     }
-  }
-
-  componentWillUnmount() {
-    console.log('interval 卸载----')
-    this.CHART = null;
   }
 
   initConfig = () => {
@@ -47,7 +43,7 @@ class App extends React.Component {
   }
 
   renderChart = () => {
-    const { data, config } = this.props
+    const { data, config, id=ID } = this.props
     const { interval, tooltip, legend, axis } = config
 
     if (data && data.length > 0) {
@@ -55,25 +51,32 @@ class App extends React.Component {
         noData: false
       }, () => {
         const element = this.ELE.current;
-        // element.innerHTML = '';
         // element.parentNode.removeChild(element)
 
-        this.CHART = new Chart(
+        // 清除节点
+        element.innerHTML = '';
+
+        // 创建元素
+        const dom = document.createElement('div')
+        dom.id = id
+        element.appendChild(dom)
+
+        const chart = new Chart(
           Object.assign({
-            container: element,
+            container: id,
           }, this.initConfig())
         )
-        this.CHART.coordinate().transpose().scale(1, -1);
-        this.CHART.data(data);
-        this.CHART.legend(legend);
-        this.CHART.axis(axis);
+        chart.coordinate().transpose().scale(1, -1);
+        chart.data(data);
+        chart.legend(legend);
+        chart.axis(axis);
         if (axis && IsArray(axis)) {
           axis.forEach(item => {
-            this.CHART.axis(item.type, item.option)
+            chart.axis(item.type, item.option)
           })
         }
-        this.CHART.tooltip(tooltip);
-        this.CHART
+        chart.tooltip(tooltip);
+        chart
         .interval()
         .position(interval && interval.position)
         .color(interval && interval.color, config.color)
@@ -88,17 +91,12 @@ class App extends React.Component {
           },
         ]);
 
-        this.CHART.interaction('active-region');
-        this.CHART.interaction('legend-highlight');
-        this.CHART.render();
+        chart.interaction('active-region');
+        chart.interaction('legend-highlight');
+        chart.render();
 
       })
     } else {
-      const element = this.ELE.current;
-      if (element) {
-        element.parentNode.removeChild(element)
-      }
-      this.CHART = null;
       this.setState({
         noData: true,
       })
@@ -122,7 +120,8 @@ class App extends React.Component {
                 }
               </div>
             )
-          : <div ref={this.ELE} className='INTERVALCHART'></div>
+          : <div ref={this.ELE} id='INTERVALBOX'></div>
+
         }
       </div>
     )

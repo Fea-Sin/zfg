@@ -33,8 +33,16 @@ class ChinaMap extends React.Component {
 
   componentWillUnmount() {
     console.log('china map 卸载---')
-    this.SCENE.destroy();
-    this.LAYER.destroy();
+    this.remove()
+  }
+
+  remove = () => {
+    if (this.SCENE && this.SCENE.destroy) {
+      this.SCENE.destroy();
+    }
+    if (this.LAYER && this.LAYER.destroy) {
+      this.LAYER.destroy();
+    }
     this.SCENE = null;
     this.LAYER = null;
   }
