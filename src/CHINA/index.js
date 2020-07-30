@@ -33,8 +33,8 @@ class ChinaMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('china map --更新')
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
+      console.log('更新----渲染')
       this.renderChart();
     }
   }
@@ -42,6 +42,7 @@ class ChinaMap extends React.Component {
 
   renderChart = () => {
     const { data, config, id=ID } = this.props
+
     if (data && data.length > 0) {
       this.setState({
         noData: false
@@ -66,7 +67,7 @@ class ChinaMap extends React.Component {
         const max = Math.max(...data.map(item => item[TYPE]));
         const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
-        console.log('china chart 构建--------')
+        console.log('中国地图-------渲染')
 
         const scene = new Scene({
           id: id,
@@ -120,6 +121,11 @@ class ChinaMap extends React.Component {
 
       })
     } else {
+      const before = document.getElementById(id)
+      if (before && before.parentNode && before.parentNode.removeChild) {
+        before.parentNode.removeChild(before)
+      }
+
       this.setState({
         noData: true
       })
@@ -141,18 +147,23 @@ class ChinaMap extends React.Component {
     return (
       <div style={ABOx}>
         {
-          noData
-          ? (
-              <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
-                {
-                  config && config.empty
-                  ? config.empty
-                  : <span style={{lineHeight: '40px'}}>暂无数据</span>
-                }
-              </div>
-            )
-          : <div style={{width: '100%', height: '100%'}} ref={this.ELE} id='CHINABOX'></div>
+          noData &&
+            <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+              {
+                config && config.empty
+                ? config.empty
+                : <span style={{lineHeight: '40px'}}>暂无数据</span>
+              }
+            </div>
         }
+        <div 
+        style={{
+          width: '100%',
+          height: '100%',
+          display: !noData ? 'block' : 'none',
+        }}
+        ref={this.ELE}
+        id='CHINABOX'></div>
       </div>
     )
   }

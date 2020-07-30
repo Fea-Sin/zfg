@@ -1,6 +1,6 @@
 {
   "name": "zfg",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "g2 react packaging version",
   "scripts": {
     "start": "rc-tools run server",

@@ -21,8 +21,8 @@ class App extends React.Component {
     this.renderChart()
   }
   componentDidUpdate(prevProps) {
-    console.log('interval 更新---')
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
+      console.log('interval 更新---渲染')
       this.renderChart()
     }
   }
@@ -50,6 +50,7 @@ class App extends React.Component {
       this.setState({
         noData: false
       }, () => {
+        console.log('柱状图----渲染')
         const element = this.ELE.current;
         const before = document.getElementById(id)
         // element.parentNode.removeChild(element)
@@ -101,6 +102,11 @@ class App extends React.Component {
 
       })
     } else {
+      const before = document.getElementById(id)
+      if (before && before.parentNode && before.parentNode.removeChild) {
+        before.parentNode.removeChild(before)
+      }
+
       this.setState({
         noData: true,
       })
@@ -114,19 +120,16 @@ class App extends React.Component {
     return (
       <div>
         {
-          noData
-          ? (
-              <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
-                {
-                  config && config.empty
-                  ? config.empty
-                  : <span style={{lineHeight: '40px'}}>暂无数据</span>
-                }
-              </div>
-            )
-          : <div ref={this.ELE} id='INTERVALBOX'></div>
-
+          noData &&
+            <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+              {
+                config && config.empty
+                ? config.empty
+                : <span style={{lineHeight: '40px'}}>暂无数据</span>
+              }
+            </div>
         }
+        <div ref={this.ELE} id='INTERVALBOX' style={{display: !noData ? 'block' : 'none'}}></div>
       </div>
     )
   }
