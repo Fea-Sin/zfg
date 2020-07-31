@@ -19,25 +19,11 @@ class ChinaMap extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
-    this.SCENE = null;
-    this.LAYER = null;
   }
 
   state = {
     noData: true,
   }
-
-  clearMap = () => {
-    if (this.SCENE && this.SCENE.destroy) {
-      this.SCENE.destroy()
-    }
-    if (this.LAYER && this.LAYER.destroy) {
-      this.LAYER.destroy()
-    }
-    this.SCENE = null
-    this.LAYER = null
-  }
-
 
   componentDidMount() {
     this.renderChart()
@@ -47,10 +33,6 @@ class ChinaMap extends React.Component {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
       this.renderChart();
     }
-  }
-
-  componentWillUnmount() {
-    this.clearMap()
   }
 
 
@@ -69,7 +51,6 @@ class ChinaMap extends React.Component {
         if (before && before.parentNode && before.parentNode.removeChild) {
           before.parentNode.removeChild(before)
         }
-        this.clearMap()
 
         // 创建元素
         const dom = document.createElement('div')
@@ -83,7 +64,7 @@ class ChinaMap extends React.Component {
         const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
 
-        this.SCENE = new Scene({
+        const scene = new Scene({
           id: id,
           logoVisible: false,
           antialias: true,
@@ -97,12 +78,12 @@ class ChinaMap extends React.Component {
           })
         });
 
-        this.SCENE.setMapStatus({
+        scene.setMapStatus({
           dragEnable: false,
         })
 
-        this.SCENE.on('loaded', () => {
-          this.LAYER = new CountryLayer(this.SCENE, {
+        scene.on('loaded', () => {
+          new CountryLayer(scene, {
             data: data,
             joinBy: [ 'NAME_CHN', china && china.label ],
             depth: 1,
