@@ -17,12 +17,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('interval mount 渲染----')
     this.renderChart()
   }
   componentDidUpdate(prevProps) {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
-      console.log('interval 更新---渲染')
       this.renderChart()
     }
   }
@@ -50,13 +48,10 @@ class App extends React.Component {
       this.setState({
         noData: false
       }, () => {
-        console.log('柱状图----渲染')
         const element = this.ELE.current;
         const before = document.getElementById(id)
-        // element.parentNode.removeChild(element)
 
         // 清除节点
-        // element.innerHTML = '';
         if (before && before.parentNode && before.parentNode.removeChild) {
           before.parentNode.removeChild(before)
         }

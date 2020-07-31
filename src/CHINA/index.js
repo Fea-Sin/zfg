@@ -15,28 +15,42 @@ const BBOX = {
   left: 0,
 }
 
-
 class ChinaMap extends React.Component {
   constructor(props) {
     super(props)
     this.ELE = React.createRef()
+    this.SCENE = null;
+    this.LAYER = null;
   }
 
   state = {
     noData: true,
   }
 
+  clearMap = () => {
+    if (this.SCENE && this.SCENE.destroy) {
+      this.SCENE.destroy()
+    }
+    if (this.LAYER && this.LAYER.destroy) {
+      this.LAYER.destroy()
+    }
+    this.SCENE = null
+    this.LAYER = null
+  }
+
 
   componentDidMount() {
-    console.log('china map mount 渲染')
     this.renderChart()
   }
 
   componentDidUpdate(prevProps) {
     if (!IsEqual(prevProps.data, this.props.data) || !IsEqual(prevProps.config, this.props.config)) {
-      console.log('更新----渲染')
       this.renderChart();
     }
+  }
+
+  componentWillUnmount() {
+    this.clearMap()
   }
 
 
@@ -55,6 +69,7 @@ class ChinaMap extends React.Component {
         if (before && before.parentNode && before.parentNode.removeChild) {
           before.parentNode.removeChild(before)
         }
+        this.clearMap()
 
         // 创建元素
         const dom = document.createElement('div')
@@ -67,9 +82,8 @@ class ChinaMap extends React.Component {
         const max = Math.max(...data.map(item => item[TYPE]));
         const MAXSIZE = ( china && china.bubbleMaxSize ) || 20;
         const MINSIZE = ( china && china.bubbleMinSize ) || 5;
-        console.log('中国地图-------渲染')
 
-        const scene = new Scene({
+        this.SCENE = new Scene({
           id: id,
           logoVisible: false,
           antialias: true,
@@ -83,12 +97,12 @@ class ChinaMap extends React.Component {
           })
         });
 
-        scene.setMapStatus({
+        this.SCENE.setMapStatus({
           dragEnable: false,
         })
 
-        scene.on('loaded', () => {
-          new CountryLayer(scene, {
+        this.SCENE.on('loaded', () => {
+          this.LAYER = new CountryLayer(this.SCENE, {
             data: data,
             joinBy: [ 'NAME_CHN', china && china.label ],
             depth: 1,
