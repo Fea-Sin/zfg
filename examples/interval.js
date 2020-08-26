@@ -12,10 +12,27 @@ reactContainer.style.cssText = `
                                 margin-bottom: 10px;
                                `;
 
+// 设置度量
+function getTicks(scale) {
+  const { min, max, tickCount=5 } = scale;
+  const avg = (max - min) / tickCount;
+  const ticks = [];
+  if (max <= 5) {
+    for(let i = 0; i <= 5; i += 1) {
+      ticks.push(i);
+    }
+  } else {
+    for ( let i = min; i <= max; i += Number(avg.toFixed(0)) ) {
+      ticks.push(i);
+    }
+  }
+  return ticks;
+}
+
 const config = {
   autoFit: true,
   height: 450,
-  padding: [20, 80, 20, 60],
+  padding: [20, 80, 50, 60],
   color: ['#FF798C', '#647BFC', '#FECA5C'],
   interval: {
     position: 'city*value',
@@ -30,6 +47,11 @@ const config = {
         offset: 10,
       }
     },
+  },
+  scale: {
+    value: {
+      tickMethod: getTicks,
+    }
   },
   axis: [
     {

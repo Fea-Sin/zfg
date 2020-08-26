@@ -6,6 +6,24 @@ import IsArray from 'lodash/isArray';
 
 const ID = 'INTERVALID'
 
+
+  // 设置度量
+  function getTicks(scale) {
+    const { min, max, tickCount=5 } = scale;
+    const avg = (max - min) / tickCount;
+    const ticks = [];
+    if (max <= 5) {
+      for(let i = 0; i <= 5; i += 1) {
+        ticks.push(i);
+      }
+    } else {
+      for ( let i = min; i <= max; i += Number(avg.toFixed(0)) ) {
+        ticks.push(i);
+      }
+    }
+    return ticks;
+  }
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -42,7 +60,7 @@ class App extends React.Component {
 
   renderChart = () => {
     const { data, config, id=ID } = this.props
-    const { interval, tooltip, legend, axis } = config
+    const { interval, tooltip, legend, axis, scale } = config
 
     if (data && data.length > 0) {
       this.setState({
@@ -74,6 +92,9 @@ class App extends React.Component {
           axis.forEach(item => {
             chart.axis(item.type, item.option)
           })
+        }
+        if (scale) {
+          chart.scale(scale)
         }
         chart.tooltip(tooltip);
         chart
