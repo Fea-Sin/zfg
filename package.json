@@ -12,8 +12,14 @@
     "prepublish": "zf-tools run guard",
     "coverage": "jest --coverage "
   },
-  "keywords": [],
-  "author": "feasin",
+  "keywords": [
+    "react chart",
+    "g2 react chart"
+  ],
+  "author": [
+    "feasin",
+    "myzykj"
+  ],
   "config": {
     "port": 8018,
     "entry": {
