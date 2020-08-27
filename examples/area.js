@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Testone, { AREA } from '../src';
-import DATA from '../src/DATA/data';
+import DATA from '../src/DATA/data2';
 
 const reactContainer = document.getElementById('__react-content');
 const bodyContainer = document.getElementsByTagName('body')
@@ -11,6 +11,21 @@ reactContainer.style.cssText = `
                                 padding: 10px;
                                 margin-bottom: 10px;
                                `;
+
+function getTicks(scale) {
+  const { min=0, max, tickCount=3 } = scale;
+  const avg = (max - min) / tickCount;
+  console.log('度量---min', min)
+  console.log('度量---max', max)
+  console.log('度量---tickCount', tickCount)
+  const MIN = 0;
+  const ticks = [];
+  for ( let i = MIN; i <= max; i += Number(avg.toFixed(0)) ) {
+    ticks.push(i);
+  }
+  console.log('度量---ticks', ticks)
+  return ticks;
+}
 
 const config = {
   autoFit: true,
@@ -32,10 +47,19 @@ const config = {
       },
     }
   },
+  // scale: {
+  //   type: 'feature',
+  //   option: {
+  //     range: [0, 1],
+  //   }
+  // },
   scale: {
-    type: 'feature',
-    option: {
+    feature: {
       range: [0, 1],
+    },
+    value: {
+      nice: true,
+      tickMethod: getTicks,
     }
   },
   legend: {

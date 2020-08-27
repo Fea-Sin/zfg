@@ -65,9 +65,12 @@ class App extends React.Component {
         chart.data(data);
 
         chart.axis(axis && axis.type, axis && axis.option)
-        chart.scale(scale && scale.type, scale && scale.option)
+        // chart.scale(scale && scale.type, scale && scale.option)
         if (legend && legend.type) {
           chart.legend(legend.type, legend.option)
+        }
+        if (scale) {
+          chart.scale(scale)
         }
 
         chart.tooltip({
