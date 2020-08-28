@@ -15,15 +15,11 @@ reactContainer.style.cssText = `
 function getTicks(scale) {
   const { min=0, max, tickCount=3 } = scale;
   const avg = (max - min) / tickCount;
-  console.log('度量---min', min)
-  console.log('度量---max', max)
-  console.log('度量---tickCount', tickCount)
   const MIN = 0;
   const ticks = [];
   for ( let i = MIN; i <= max; i += Number(avg.toFixed(0)) ) {
     ticks.push(i);
   }
-  console.log('度量---ticks', ticks)
   return ticks;
 }
 
