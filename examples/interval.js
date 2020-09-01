@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Testone, { INTERVAL } from '../src';
-import DATA from '../src/DATA/data-interval';
+import DATA from '../src/DATA/data-interval2';
 
 const reactContainer = document.getElementById('__react-content');
 const bodyContainer = document.getElementsByTagName('body')
@@ -50,6 +50,7 @@ const config = {
   },
   scale: {
     value: {
+      nice: true,
       tickMethod: getTicks,
     }
   },
