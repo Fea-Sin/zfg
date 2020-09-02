@@ -41,10 +41,15 @@ const config = {
       type: 'value',
       option: {
         style: {
-          fill: '##333333',
+          fill: '#545454',
           fontSize: 14,
         },
         offset: 10,
+        content: (data) => {
+          if (data.value > 0) {
+            return data.value
+          }
+        }
       }
     },
   },
